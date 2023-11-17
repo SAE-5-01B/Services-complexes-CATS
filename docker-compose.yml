@@ -1,0 +1,65 @@
+version: '3'
+
+services:
+  ldap-server:
+    image: osixia/openldap
+    container_name: ldap_server_container
+    environment:
+      LDAP_ORGANISATION: "CATS"
+      LDAP_DOMAIN: "$DOMAINENIV2.$DOMAINENIV1"
+      LDAP_ADMIN_PASSWORD: "$LDAP_ADMIN_PASSWORD"
+    ports:
+      - "389:389"
+    volumes:
+      - ./data/ldap_data:/var/lib/ldap
+      - ./data/ldap_config:/etc/ldap/slapd.d
+      - ./data/nouveauContenu.ldif:/nouveauContenu.ldif
+
+  phpldapadmin:
+    image: osixia/phpldapadmin
+    container_name: ldap_phpldapadmin_container
+    environment:
+      PHPLDAPADMIN_LDAP_HOSTS: ldap-server
+      PHPLDAPADMIN_HTTPS: 0
+    ports:
+      - "6080:80"
+    depends_on:
+      - ldap-server
+
+  web-portal:
+    build:
+      context: .
+      dockerfile_inline: |
+        FROM php:apache
+        COPY ./Certificats/localhost.crt /etc/ssl/certs/localhost.crt
+        COPY ./Certificats/localhost.key /etc/ssl/private/localhost.key
+        
+        COPY ./Config-SSL/default-ssl.conf /etc/apache2/sites-available/default-ssl.conf
+        COPY ./Config-SSL/ports.conf /etc/apache2/ports.conf
+        COPY ./Config-SSL/apache2.conf /etc/apache2/apache2.conf
+        
+        RUN apt-get update && apt-get install -y libldap2-dev && \
+          docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ && \
+          docker-php-ext-install ldap && \
+          a2enmod ssl && a2ensite default-ssl && a2enmod rewrite && a2enmod socache_shmcb \
+            && service apache2 restart
+    entrypoint:
+      - /bin/bash
+      - -c
+      - |
+        rm -f /etc/apache2/sites-available/000-default.conf
+        apachectl -D FOREGROUND
+    container_name: ldap_web_portal_container
+    environment:
+      - LDAP_ADMIN_PASSWORD=$LDAP_ADMIN_PASSWORD
+      - DOMAINENIV1=$DOMAINENIV1
+      - DOMAINENIV2=$DOMAINENIV2
+    volumes:
+      - ./web-portal:/var/www/html
+      - ./Certificats/localhost.crt:/etc/ssl/certs/localhost.crt
+      - ./Certificats/localhost.key:/etc/ssl/private/localhost.key
+      - ./Config-SSL/default-ssl.conf:/etc/apache2/sites-available/default-ssl.conf
+      - ./Config-SSL/ports.conf:/etc/apache2/ports.conf
+      - ./Config-SSL/apache2.conf:/etc/apache2/apache2.conf
+    ports:
+      - "8443:443"
