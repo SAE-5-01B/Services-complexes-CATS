@@ -34,13 +34,11 @@ $displayName = isset($userDetails['cn']) ? $userDetails['cn'][0] : "Utilisateur"
 
             <div id="lesServicesUtilisateur">
                 <div>
-                    <img alt="Ceci est le service n°1 qui est la base de données" src="./../images/base_de_donnees.png"/>
-                    <p>Base de données</p>
-                </div>
-                <div>
+                <a href="http://localhost:9080" target="_bla">
                     <img alt="Ceci est le service n°2 qui est le service next cloud" src="./../images/nextCloud.png"/>
                     <p>Next Cloud</p>
                 </div>
+                </a>
             </div>
             <div id="lesServicesAdministrateurs">
                 <!--Si l'utilisateur est un administrateur il a accès à phpLDAPAdmin -->
