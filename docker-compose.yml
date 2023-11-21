@@ -8,13 +8,16 @@ services:
       LDAP_ORGANISATION: "CATS"
       LDAP_DOMAIN: "$DOMAINENIV2.$DOMAINENIV1"
       LDAP_ADMIN_PASSWORD: "$LDAP_ADMIN_PASSWORD"
+      LDAP_READONLY_USER: true
+      LDAP_READONLY_USER_USERNAME: "sysUser"
+      LDAP_READONLY_USER_PASSWORD: "readOnlyPassword"
     ports:
       - "389:389"
     volumes:
       - ./data/ldap_data:/var/lib/ldap
       - ./data/ldap_config:/etc/ldap/slapd.d
-      - ./data/nouveauContenu.ldif:/nouveauContenu.ldif
-
+      - ./init:/init:ro
+    
   phpldapadmin:
     image: osixia/phpldapadmin
     container_name: ldap_phpldapadmin_container
@@ -63,3 +66,33 @@ services:
       - ./Config-SSL/apache2.conf:/etc/apache2/apache2.conf
     ports:
       - "8443:443"
+
+  nextcloud_db:
+    image: mariadb
+    container_name: nextcloud_db
+    restart: always
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    volumes:
+     - ./data/nextcloud_db_data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=$NEXTCLOUD_MYSQL_ROOT_PASSWORD  # Mot de passe de l'utilisateur root de mariadb
+      - MYSQL_DATABASE=$NEXTCLOUD_MYSQL_DATABASE  # Nom de la base de données à créer à l'initialisation du conteneur
+      - MYSQL_USER=$NEXTCLOUD_MYSQL_USER  # Nom de l'utilisateur de la base de données créée
+      - MYSQL_PASSWORD=$NEXTCLOUD_MYSQL_PASSWORD  # Mot de passe de l'utilisateur créé
+ 
+  nextcloud_app:
+    image: nextcloud
+    container_name: nextcloud_app
+    restart: always
+    ports:
+     - 9080:80
+    links:
+     - nextcloud_db
+    volumes:
+     - ./data/nextcloud_data:/var/www/html
+    environment:
+      - MYSQL_HOST=nextcloud_db  # Nom du conteneur de la base de données
+      - MYSQL_DATABASE=$NEXTCLOUD_MYSQL_DATABASE  # Nom de la base de données
+      - MYSQL_USER=$NEXTCLOUD_MYSQL_USER  # Nom de l'utilisateur de la base de données
+      - MYSQL_PASSWORD=$NEXTCLOUD_MYSQL_PASSWORD  # Mot de passe de l'utilisateur de la base de données
+     
