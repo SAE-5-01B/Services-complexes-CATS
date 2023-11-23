@@ -1,7 +1,7 @@
 <?php
 session_start();
 //Ce fichier permet de faire l'intermédiaire entre la vue et le modèle pour le changement de mot de passe
-require "./../model/methodeLDAP.php";
+require "./../model/LDAP/methodeLDAP.php";
 //$changementMotDePasse = passwordChange("ggonfiantini","gogo","gaga"); //Exemple utilisation de la fonction passwordChange
 if(isset($_POST['username']) && isset($_POST['oldPassword']) && isset($_POST['newPassword']) && isset($_POST['confirmPassword'])){
     $username = $_POST['username'];

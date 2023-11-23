@@ -8,7 +8,6 @@ $password_LDAP_ADMIN = getenv('LDAP_ADMIN_PASSWORD');
 $domain_niveau_1 = getenv('DOMAINENIV1');
 $domain_niveau_2 = getenv('DOMAINENIV2');
 
-
 require "connectionLDAP.php";
 /**
  * Cette fonction permet d'autentifier un utilisateur au LDAP
@@ -20,8 +19,8 @@ function authentificationAuLDAP($username, $password)
 {
     $ldap_conn = connectionLDAP::getInstance()->getConnection();
     if ($ldap_conn) {
-        if (@ldap_bind($ldap_conn, "cn=admin,dc=".getenv('DOMAINENIV2').",dc=".getenv("DOMAINENIV1"), getenv('LDAP_ADMIN_PASSWORD'))) {
-            $search = ldap_search($ldap_conn, "dc=".getenv('DOMAINENIV2') .",dc=".getenv("DOMAINENIV1"), "(uid=" . $username . ")");
+        if (@ldap_bind($ldap_conn, "cn=admin,dc=" . getenv('DOMAINENIV2') . ",dc=" . getenv("DOMAINENIV1"), getenv('LDAP_ADMIN_PASSWORD'))) {
+            $search = ldap_search($ldap_conn, "dc=" . getenv('DOMAINENIV2') . ",dc=" . getenv("DOMAINENIV1"), "(uid=" . $username . ")");
             if ($search) {
                 $entries = ldap_get_entries($ldap_conn, $search);
                 if ($entries["count"] > 0) {
@@ -49,21 +48,29 @@ function authentificationAuLDAP($username, $password)
  * Cette fonction permet de vérifier si un utilisateur est un administrateur
  * Revoir cette fonction pour qu'elle avec les groupes admin (LDAP).
  */
-function isAdmin($username) {
+function isAdmin($username)
+{
     $ldap_conn = connectionLDAP::getInstance()->getConnection();
     if ($ldap_conn) {
         // Se connecter d'abord avec un compte de service/administrateur
-        if (@ldap_bind($ldap_conn, "cn=admin,dc=".getenv('DOMAINENIV2') .",dc=".getenv("DOMAINENIV1"), getenv('LDAP_ADMIN_PASSWORD'))) {
+        if (@ldap_bind($ldap_conn, "cn=admin,dc=" . getenv('DOMAINENIV2') . ",dc=" . getenv("DOMAINENIV1"), getenv('LDAP_ADMIN_PASSWORD'))) {
             // Recherche de l'utilisateur par son uid
-            $search = ldap_search($ldap_conn, "ou=utilisateurs,dc=".getenv('DOMAINENIV2') .",dc=".getenv("DOMAINENIV1"), "(uid=" . $username . ")");
+            $search = ldap_search($ldap_conn, "ou=utilisateurs,dc=" . getenv('DOMAINENIV2') . ",dc=" . getenv("DOMAINENIV1"), "(uid=" . $username . ")");
             $entries = ldap_get_entries($ldap_conn, $search);
-
-            // Vérifie si l'utilisateur a été trouvé et si son DN est dans le groupe "Administrateurs"
-            if ($entries["count"] > 0 && strpos($entries[0]["dn"], "cn=Administrateurs,dc=mondomaine,dc=local") !== false) { //TODO : changer le domaine et tout
-                return true; // L'utilisateur est un administrateur
-            } else {
-                return false; // L'utilisateur n'est pas un administrateur
+            // Vérifie si l'utilisateur a été trouvé
+            if ($entries["count"] > 0) {
+                $userDn = $entries[0]["dn"];
+                // Recherche des groupes de l'utilisateur
+                $search = ldap_search($ldap_conn, "ou=groupes,dc=" . getenv('DOMAINENIV2') . ",dc=" . getenv("DOMAINENIV1"), "(member=" . $userDn . ")");
+                $entries = ldap_get_entries($ldap_conn, $search);
+                // Vérifie si l'utilisateur est dans le groupe admin
+                for ($i = 0; $i < $entries["count"]; $i++) {
+                    if ($entries[$i]["cn"][0] === "G3") {
+                        return true; // L'utilisateur est un administrateur
+                    }
+                }
             }
+            return false; // L'utilisateur n'est pas un administrateur
         } else {
             return false; // Connexion avec le compte admin échouée
         }
@@ -85,13 +92,14 @@ function isAdmin($username) {
  * 'ERR_PASSWORD_CHANGE' si la modification du mot de passe échoue.
  * 'SUCCESS' si le changement de mot de passe est réussi.
  */
-function passwordChange($username, $oldPassword, $newPassword) : string {
+function passwordChange($username, $oldPassword, $newPassword): string
+{
     $ldap_conn = connectionLDAP::getInstance()->getConnection();
     if ($ldap_conn) {
         // Se connecter d'abord avec un compte de service/administrateur
-        if (@ldap_bind($ldap_conn, "cn=admin,dc=".getenv('DOMAINENIV2') .",dc=".getenv("DOMAINENIV1"), getenv('LDAP_ADMIN_PASSWORD'))) {
+        if (@ldap_bind($ldap_conn, "cn=admin,dc=" . getenv('DOMAINENIV2') . ",dc=" . getenv("DOMAINENIV1"), getenv('LDAP_ADMIN_PASSWORD'))) {
             // Recherche de l'utilisateur par son uid
-            $search = ldap_search($ldap_conn, "ou=utilisateurs,dc=".getenv('DOMAINENIV2') .",dc=".getenv("DOMAINENIV1"), "(uid=" . ldap_escape($username, "", LDAP_ESCAPE_FILTER) . ")");
+            $search = ldap_search($ldap_conn, "ou=utilisateurs,dc=" . getenv('DOMAINENIV2') . ",dc=" . getenv("DOMAINENIV1"), "(uid=" . ldap_escape($username, "", LDAP_ESCAPE_FILTER) . ")");
             if ($search === false) {
                 // La recherche a échoué
                 return 'ERR_USER_SEARCH'; // La recherche a échoué
@@ -127,4 +135,36 @@ function passwordChange($username, $oldPassword, $newPassword) : string {
         return 'ERR_LDAP_CONNECTION'; // Connexion LDAP échouée
     }
 }
-?>
+
+
+
+function findUserGroup($username) {
+    $ldap_conn = connectionLDAP::getInstance()->getConnection();
+    if ($ldap_conn) {
+        // Se connecter d'abord avec un compte de service/administrateur
+        if (@ldap_bind($ldap_conn, "cn=admin,dc=" . getenv('DOMAINENIV2') . ",dc=" . getenv("DOMAINENIV1"), getenv('LDAP_ADMIN_PASSWORD'))) {
+            // Recherche de l'utilisateur par son uid
+            $search = ldap_search($ldap_conn, "ou=utilisateurs,dc=" . getenv('DOMAINENIV2') . ",dc=" . getenv("DOMAINENIV1"), "(uid=" . $username . ")");
+            $entries = ldap_get_entries($ldap_conn, $search);
+            // Vérifie si l'utilisateur a été trouvé
+            if ($entries["count"] > 0) {
+                $userDn = $entries[0]["dn"];
+                // Recherche des groupes de l'utilisateur
+                $search = ldap_search($ldap_conn, "ou=groupes,dc=" . getenv('DOMAINENIV2') . ",dc=" . getenv("DOMAINENIV1"), "(member=" . $userDn . ")");
+                $entries = ldap_get_entries($ldap_conn, $search);
+                // Vérifie si l'utilisateur est dans le groupe admin
+                if ($entries["count"] > 0) {
+                    return $entries[0]["cn"][0];
+                }
+                else{
+                    return "Aucun groupe trouvé";
+                }
+            }
+            return false;
+        } else {
+            return false; // Connexion avec le compte admin échouée
+        }
+    } else {
+        return false; // Connexion LDAP échouée
+    }
+}

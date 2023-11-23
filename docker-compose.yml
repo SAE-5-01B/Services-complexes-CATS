@@ -42,7 +42,7 @@ services:
         COPY ./Config-SSL/apache2.conf /etc/apache2/apache2.conf
         
         RUN apt-get update && apt-get install -y libldap2-dev && \
-          docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ && \
+          docker-php-ext-configure ldap --with-libdir=lib/$(gcc -dumpmachine)/ && \
           docker-php-ext-install ldap && \
           a2enmod ssl && a2ensite default-ssl && a2enmod rewrite && a2enmod socache_shmcb \
             && service apache2 restart
@@ -95,6 +95,7 @@ services:
       - MYSQL_DATABASE=$NEXTCLOUD_MYSQL_DATABASE  # Nom de la base de données
       - MYSQL_USER=$NEXTCLOUD_MYSQL_USER  # Nom de l'utilisateur de la base de données
       - MYSQL_PASSWORD=$NEXTCLOUD_MYSQL_PASSWORD  # Mot de passe de l'utilisateur de la base de données
+
   nginx:
     image: nginx:latest
     container_name: nginx_container
@@ -107,4 +108,20 @@ services:
     depends_on:
      - nextcloud_app
      - web-portal
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    command: [ "start-dev" ]
+    container_name: keycloak_container
+    environment:
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+      - DB_VENDOR=H2
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./data/keycloak_data:/opt/keycloak/data
+    depends_on:
+      - ldap-server
      

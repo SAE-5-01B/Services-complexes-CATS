@@ -1,28 +1,71 @@
 /* Style de la barre de navigation */
 .navbar {
     width: 100%;
-
     background-color: #007bff;
     padding: 20px 0;
-    text-align: center;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
     position: fixed;
     top: 0;
     left: 0;
     z-index: 1000;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .nav-link {
     text-decoration: none;
-    color: #fff; /* Couleur du texte pour contraste avec le fond bleu */
+    color: #fff;
     font-size: 18px;
     padding: 8px 15px;
+    padding-top: 10px;
     border-radius: 4px;
     transition: background-color 0.3s ease;
+    margin: 0 10px; /* Ajoutez une marge aux autres liens pour les centrer */
 }
 
 .nav-link:hover {
-    background-color: #0056b3; /* Changement de couleur au survol */
+    background-color: #1b60c6;
 }
 
-/* Fin style de la barre de navigation */
+.logo {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+#nomProjet {
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+    vertical-align: middle;
+}
+
+
+#gaucheNavBarre{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-right: auto;
+}
+#millieuNavBarre {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#droiteNavBarre{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-left: auto;
+}
+#imgAndCATS{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 20px;
+    border-radius: 4px;
+
+}
+/* Fin Style de la barre de navigation */

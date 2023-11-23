@@ -4,13 +4,13 @@
 <html>
 <head>
     <title>Changement de Mot de Passe</title>
-    <link rel="stylesheet" type="text/css" href="../style/stylePagesPersonnelUtilisateur.css">
-    <link rel="stylesheet" href="./../style/styleBarreNavigation.css">
+    <link rel="stylesheet" type="text/css" href="../Style/stylePagesPersonnelUtilisateur.css">
+    <link rel="stylesheet" href="../Style/styleBarreNavigation.css">
 </head>
 <body>
 <div class="navbar">
     <nav class="navbar">
-        <a href="espacePersonnelUtilisateur.php" class="nav-link">Talbeau de bord</a>
+        <a href="espacePersonnelUtilisateur.html" class="nav-link">Talbeau de bord</a>
         <a href="./informationsUtilisateur.php" class="nav-link">Mes informations</a>
         <a href="./../../controller/deconnexion.php" class="nav-link">Se déconnecter</a>
     </nav>
