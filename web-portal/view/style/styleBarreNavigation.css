@@ -1,8 +1,8 @@
 /* Style de la barre de navigation */
 .navbar {
     width: 100%;
-    background-color: #007bff;
-    padding: 20px 0;
+    background-color: #0056b3; /* Couleur un peu plus sombre pour un look moderne */
+    padding: 15px; /* Ajustement de l'espacement */
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
     position: fixed;
     top: 0;
@@ -17,17 +17,16 @@
     text-decoration: none;
     color: #fff;
     font-size: 18px;
-    padding: 8px 15px;
-    padding-top: 10px;
+    padding: 8px 20px;
+    font-weight: 500;
     border-radius: 4px;
     transition: background-color 0.3s ease;
-    margin: 0 10px; /* Ajoutez une marge aux autres liens pour les centrer */
+    margin: 0 10px;
 }
 
 .nav-link:hover {
     background-color: #1b60c6;
 }
-
 .logo {
     width: 50px;
     height: 50px;
@@ -67,5 +66,15 @@
     margin-left: 20px;
     border-radius: 4px;
 
+}
+/*Bouton de deconnexion*/
+#logout{
+    background-color: #0056b3;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    color: #fff;
+    margin-right: 50px;
+}
+#logout:hover{
+    background-color: #1b60c6;
 }
 /* Fin Style de la barre de navigation */
