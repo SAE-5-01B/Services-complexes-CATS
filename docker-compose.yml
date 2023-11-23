@@ -109,19 +109,29 @@ services:
      - nextcloud_app
      - web-portal
 
-  keycloak:
-    image: quay.io/keycloak/keycloak:latest
-    command: [ "start-dev" ]
-    container_name: keycloak_container
-    environment:
-      - KEYCLOAK_USER=admin
-      - KEYCLOAK_ADMIN=admin
-      - KEYCLOAK_ADMIN_PASSWORD=admin
-      - DB_VENDOR=H2
-    ports:
-      - "8080:8080"
+  kc-db:
+    image: mysql:5.7
     volumes:
-      - ./data/keycloak_data:/opt/keycloak/data
+      - ./data/kc-db_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: keycloak
+      MYSQL_USER: keycloak
+      MYSQL_PASSWORD: password
+  kc:
+    image: quay.io/keycloak/keycloak
+    command: [ "start-dev" ]
+    environment:
+      DB_VENDOR: MYSQL
+      DB_ADDR: mysql
+      DB_DATABASE: keycloak
+      DB_USER: keycloak
+      DB_PASSWORD: password
+      KEYCLOAK_USER: admin
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    ports:
+      - 8080:8080
     depends_on:
-      - ldap-server
+      - kc-db
      
