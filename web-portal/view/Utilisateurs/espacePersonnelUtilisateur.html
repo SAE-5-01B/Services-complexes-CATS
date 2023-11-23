@@ -15,7 +15,7 @@
 <nav class="navbar">
 
     <div id="gaucheNavBarre">
-        <div id="imgAndCATS"><img src="./../Images/patte-de-chat.png" alt="Logo du projet Miaou" class="logo"><a id="nomProjet">CATS </a></div>
+        <div id="imgAndCATS"><img src="../Images/patte-de-chat-blanche.png" alt="Logo du projet Miaou" class="logo"><a id="nomProjet">CATS </a></div>
     </div>
     <div id="millieuNavBarre">
         <a href="espacePersonnelUtilisateur.html" class="nav-link">Talbeau de bord</a>
@@ -29,11 +29,17 @@
                 // S'assurer que la page est complètement chargée
                 window.addEventListener('load', () => {
                     const logoutBtn = document.getElementById('logout');
-
                     // Initialiser Keycloak et vérifier si l'utilisateur est connecté
                     keycloak.init({ onLoad: 'check-sso' }).then(authenticated => {
-                        if (!authenticated) {
-                            // Si non authentifié, rediriger vers la page de connexion
+                        if (authenticated) {
+                            // Récupérer les informations de l'utilisateur
+                            const userInfo = KeycloakService.getUserInfo();
+                            // Mettre à jour le message de bienvenue
+                            document.getElementById('welcomeMessage').textContent = `Bonjour ${userInfo.firstNameAndLastName}`;
+                            // Affiche le groupe
+
+                        } else {
+                            // Redirection si non authentifié
                             window.location.replace("https://localhost:8443/index.html");
                         }
                     });
@@ -47,7 +53,18 @@
 </nav>
 
 <div id="contenuePage">
-    <h1>Profil de l'Utilisateur</h1>
+    <div class="container">
+        <h1 id="welcomeMessage"></h1>
+        <p>Bienvenue sur votre espace CATS. Utilisez les liens ci-dessous pour naviguer vers les différents services.</p>
+    </div>
+
+    <div class="container">
+        <h1>Vos services</h1>
+
+    </div>
+
+
+
 
 
 </div>

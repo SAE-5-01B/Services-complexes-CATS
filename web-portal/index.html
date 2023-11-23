@@ -3,15 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <title>Authentification Keycloak</title>
+    <link rel="stylesheet" href="./view/Style/styleAuthentification.css">
     <script src="https://cdn.jsdelivr.net/npm/keycloak-js"></script>
     <script src="./model/Keycloak/keycloak-config.js"></script>
+    <script>
+        // Fonction pour ouvrir et fermer le popup
+        function toggleInfoPopup() {
+            var popup = document.getElementById("infoPopup");
+            if (popup.style.display === "none" || !popup.style.display) {
+                popup.style.display = "block";
+            } else {
+                popup.style.display = "none";
+            }
+        }
+    </script>
 </head>
 <body>
-<div>
-    <h1>PORTAIL DE CONNEXION</h1>
-    <button id="login">Se Connecter avec Keycloak</button>
-    <button id="logout" style="display:none;">Se Déconnecter</button>
+<div class="login-container">
+
+    <div id="titrePlusImage">
+        <h1 id="titreMiaou">Bienvenue sur le portail CATS <img src="./view/Images/patte-de-chat-noir.png" class="logo" alt=""></h1>
+    </div>
+
+    <p>Connectez-vous pour accéder à votre espace personnel.</p>
+    <div class="button-group">
+        <button id="login">Se Connecter avec Keycloak</button>
+        <button id="logout" style="display:none;">Se Déconnecter</button>
+    </div>
+
+    <div class="button-group">
+        <button onclick="toggleInfoPopup()">Informations</button>
+        <a href="Informations.html"><button>Nous contacter</button></a>
+    </div>
+
+
 </div>
+<!-- Popup pour les informations -->
+<div id="infoPopup">
+    <h2>Informations sur le site</h2>
+
+    <p>Bienvenue sur CATS (Central Authentication & Technology Services), votre solution tout-en-un pour la gestion et la sécurisation de données. Nous apprécions votre confiance dans notre projet innovant.</p>
+
+    <p>CATS est dédié à simplifier votre expérience digitale en regroupant des services essentiels comme le stockage de données et un service FTP robuste pour la gestion de fichiers et dossiers. Notre plateforme est conçue pour vous offrir efficacité et commodité.</p>
+
+    <p>Nous prenons la sécurité au sérieux. CATS assure des communications sécurisées et protégées sur le site, vous garantissant tranquillité d'esprit et protection optimale de vos informations.</p>
+
+    <p>Pour rejoindre notre communauté CATS, contactez notre support pour créer un compte. Cliquez sur "Nous contacter" sur le portail de connexion pour toute assistance ou pour débuter votre expérience CATS.</p>
+
+    <button onclick="toggleInfoPopup()">Fermer</button>
+</div>
+
 
 <script src="./model/Keycloak/auth_Keycloak.js"></script>
 </body>

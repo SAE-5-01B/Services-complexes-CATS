@@ -16,7 +16,7 @@ session_start();
     <nav class="navbar">
 
         <div id="gaucheNavBarre">
-            <div id="imgAndCATS"><img src="../Images/patte-de-chat.png" alt="Logo du projet Miaou" class="logo"><a id="nomProjet">CATS </a></div>
+            <div id="imgAndCATS"><img src="../Images/patte-de-chat-noir.png" alt="Logo du projet Miaou" class="logo"><a id="nomProjet">CATS </a></div>
         </div>
 
         <div id="millieuNavBarre">
