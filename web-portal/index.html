@@ -24,19 +24,15 @@
     <div id="titrePlusImage">
         <h1 id="titreMiaou">Bienvenue sur le portail CATS <img src="./view/Images/patte-de-chat-noir.png" class="logo" alt=""></h1>
     </div>
-
     <p>Connectez-vous pour accéder à votre espace personnel.</p>
     <div class="button-group">
         <button id="login">Se Connecter avec Keycloak</button>
         <button id="logout" style="display:none;">Se Déconnecter</button>
     </div>
-
     <div class="button-group">
-        <button onclick="toggleInfoPopup()">Informations</button>
-        <a href="Informations.html"><button>Nous contacter</button></a>
+        <a onclick="toggleInfoPopup()">Informations</a>
+        <a href="./view/PortailConnexion/nousContacter.html">Nous contacter</a>
     </div>
-
-
 </div>
 <!-- Popup pour les informations -->
 <div id="infoPopup">
@@ -52,8 +48,6 @@
 
     <button onclick="toggleInfoPopup()">Fermer</button>
 </div>
-
-
-<script src="./model/Keycloak/auth_Keycloak.js"></script>
+<script src="model/Keycloak/scriptsParPage/script_portailConnexion.js"></script>
 </body>
 </html>
