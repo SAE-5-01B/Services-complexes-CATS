@@ -69,6 +69,7 @@
 }
 /*Bouton de deconnexion*/
 #logout{
+    width: 100%;
     background-color: #0056b3;
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     color: #fff;

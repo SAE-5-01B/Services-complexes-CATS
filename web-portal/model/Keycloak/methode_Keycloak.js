@@ -13,12 +13,7 @@ const KeycloakService = {
             roles: keycloak.tokenParsed.realm_access.roles,
             firstNameAndLastName: keycloak.tokenParsed.given_name,
             lastName: keycloak.tokenParsed.family_name,
-            groups: keycloak.tokenParsed.groups
+            groups: keycloak.tokenParsed.groupmembership,
         };
     },
-    isauthenticated: function() {
-        return keycloak.authenticated;
-    },
-
-
 };

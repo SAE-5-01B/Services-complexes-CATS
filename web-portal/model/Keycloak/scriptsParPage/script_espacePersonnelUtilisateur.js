@@ -7,7 +7,14 @@ window.addEventListener('load', () => {
             const userInfo = KeycloakService.getUserInfo();
             // Mettre à jour le message de bienvenue
             document.getElementById('welcomeMessage').textContent = `Bonjour ${userInfo.firstNameAndLastName}`;
-            // Affiche le groupe
+
+            const groupsUtilisateurs = userInfo.groups;
+            for (let i = 0; i < groupsUtilisateurs.length; i++) {
+                if (groupsUtilisateurs[i] === "/Administrateur") {
+                    const divAdministrateur = document.getElementById("divAdminKeycloak");
+                    divAdministrateur.style.display = "block";
+                }
+            }
 
         } else {
             // Redirection si non authentifié

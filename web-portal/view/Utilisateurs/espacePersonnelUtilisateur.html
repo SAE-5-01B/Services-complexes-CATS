@@ -33,9 +33,31 @@
 
     <div class="container">
         <h1>Vos services</h1>
+        <div id="lesServicesUtilisateur">
+            <div>
+                <img src="../Images/nextCloud.png" alt="Logo du service">
+                <p>NextCloud</p>
+            </div>
 
+            <div>
+                <img src="../Images/base_de_donnees.png" alt="Logo du service">
+                <p>Base de données</p>
+            </div>
+        </div>
+
+        <!--Si l'utilisateur est admin il peut accéder à la console administrateur-->
+        <div id="divAdminKeycloak" style="display: none">
+            <a target="_blank" href="http://localhost:8080/admin/CATS/console/#/CATS">
+                <img src="../Images/keycloak.png" alt="Logo du service">
+                <p>Console admin Keycloak</p>
+            </a>
+        </div>
+        <!--
+        Faire en sorte de récupérer les groupes des utilisateurs pour afficher les liens vers les services correspondants
+        Lien pour la console admin Keycloak pour ceux qui ont le rôle "realm-adminstrator"
+        http://localhost:8080/admin/CATS/console/#/CATS
+        -->
     </div>
-
 </div>
 <script src="../../model/Keycloak/scriptsParPage/script_espacePersonnelUtilisateur.js"></script>
 </body>
