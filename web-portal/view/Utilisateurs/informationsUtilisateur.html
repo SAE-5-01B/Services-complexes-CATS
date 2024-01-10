@@ -10,6 +10,7 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../Style/stylePagesPersonnelUtilisateur.css">
     <link rel="stylesheet" href="../Style/styleBarreNavigation.css">
+    <script src="./../../serverConfig.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/keycloak-js"></script>
     <script src="./../../model/Keycloak/keycloak-config.js"></script>
     <script src="./../../model/Keycloak/methode_Keycloak.js"></script>
@@ -42,6 +43,19 @@ session_start();
             <li><p id="groupes">Groupes : </p></li>
         </ul>
     </div>
+
+    <div class="container">
+        <h1>Token</h1>
+        <p>Temps avant expiration : <span id="countdown"></span></p>
+        <p id="reponseBouton"></p>
+        <button id="refreshToken">Rafraîchir le Token</button>
+    </div>
+
+    <div class="container">
+        <h1>Session</h1>
+        <p>Temps restant : <span id="tempsRestantSession"></span></p>
+    </div>
+
     <div class="container">
         <h1>Votre compte Keycloak</h1>
         <button type="button" id="boutonCompteKeycloak">Accéder à mon compte personnel</button>
@@ -51,8 +65,6 @@ session_start();
         <h1>Changer le mot de passe</h1>
         <button type="button" id="boutonChangementMDP">Changer le mot de passe</button>
     </div>
-
-
 
 </div>
 <script src="../../model/Keycloak/scriptsParPage/script_informationUtilisateur.js"></script>

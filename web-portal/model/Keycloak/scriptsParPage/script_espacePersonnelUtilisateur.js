@@ -12,13 +12,23 @@ window.addEventListener('load', () => {
             for (let i = 0; i < groupsUtilisateurs.length; i++) {
                 if (groupsUtilisateurs[i] === "/Administrateur") {
                     const divAdministrateur = document.getElementById("divAdminKeycloak");
+                    const linkAdminKeycloak = document.getElementById("linkAdminKeycloak");
+                    linkAdminKeycloak.href = `http://${serverIp}:8080/admin/CATS/console`;
                     divAdministrateur.style.display = "block";
                 }
             }
 
+            const linkNextCloud = document.getElementById('linkNextCloud');
+            if (linkNextCloud) {
+                linkNextCloud.href = `http://${serverIp}:9080`;
+            }
+            const linkRocketChat = document.getElementById('linkRocketChat');
+            if (linkRocketChat) {
+                linkRocketChat.href = `http://${serverIp}:3000`;
+            }
+
         } else {
-            // Redirection si non authentifié
-            window.location.replace("https://localhost:8443/index.html");
+            window.location.replace(`http://${serverIp}:8888/index.html`);
         }
     });
     // Gérer le clic sur le bouton de déconnexion

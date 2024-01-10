@@ -6,6 +6,7 @@
     <script src="https://cdn.jsdelivr.net/npm/keycloak-js"></script>
     <link rel="stylesheet" href="./../Style/styleBarreNavigation.css">
     <link rel="stylesheet" href="./../Style/stylePagesPersonnelUtilisateur.css">
+    <script src="./../../serverConfig.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/keycloak-js"></script>
     <script src="./../../model/Keycloak/keycloak-config.js"></script>
     <script src="./../../model/Keycloak/methode_Keycloak.js"></script>
@@ -35,19 +36,18 @@
         <h1>Vos services</h1>
         <div id="lesServicesUtilisateur">
             <div>
-                <img src="../Images/nextCloud.png" alt="Logo du service">
-                <p>NextCloud</p>
+                <a target="_blank" id="linkNextCloud"><img src="../Images/nextCloud.png" alt="Logo du service">
+                <p>NextCloud</p></a>
             </div>
 
             <div>
-                <img src="../Images/base_de_donnees.png" alt="Logo du service">
-                <p>Base de données</p>
+                <a target="_blank" id="linkRocketChat"><img src="" alt="Logo du service">
+                <p>RocketChat</p></a>
             </div>
         </div>
 
-        <!--Si l'utilisateur est admin il peut accéder à la console administrateur-->
         <div id="divAdminKeycloak" style="display: none">
-            <a target="_blank" href="http://localhost:8080/admin/CATS/console/#/CATS">
+            <a target="_blank" id="linkAdminKeycloak">
                 <img src="../Images/keycloak.png" alt="Logo du service">
                 <p>Console admin Keycloak</p>
             </a>

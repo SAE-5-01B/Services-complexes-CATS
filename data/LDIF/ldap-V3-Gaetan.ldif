@@ -1,0 +1,274 @@
+dn: ou=groupes,dc=example,dc=org
+objectClass: organizationalUnit
+ou: groupes
+
+dn: ou=utilisateurs,dc=example,dc=org
+objectClass: organizationalUnit
+ou: utilisateurs
+
+dn: cn=G1,ou=groupes,dc=example,dc=org
+objectClass: groupOfNames
+cn: G1
+member: uid=gmanvussa,ou=utilisateurs,dc=example,dc=org
+member: uid=jneymar,ou=utilisateurs,dc=example,dc=org
+member: uid=anasse,ou=utilisateurs,dc=example,dc=org
+member: uid=jnanas2,ou=utilisateurs,dc=example,dc=org
+member: uid=jnanas1,ou=utilisateurs,dc=example,dc=org
+member: uid=jnanas,ou=utilisateurs,dc=example,dc=org
+
+dn: cn=G2,ou=groupes,dc=example,dc=org
+objectClass: groupOfNames
+cn: G2
+member: uid=jceptes,ou=utilisateurs,dc=example,dc=org
+member: uid=mhimum,ou=utilisateurs,dc=example,dc=org
+member: uid=ltrophie,ou=utilisateurs,dc=example,dc=org
+member: uid=aconda,ou=utilisateurs,dc=example,dc=org
+member: uid=aterrieur,ou=utilisateurs,dc=example,dc=org
+member: uid=lpard,ou=utilisateurs,dc=example,dc=org
+
+dn: cn=G3,ou=groupes,dc=example,dc=org
+objectClass: groupOfNames
+cn: G3
+member: uid=jpatagueulle,ou=utilisateurs,dc=example,dc=org
+member: uid=merrateur,ou=utilisateurs,dc=example,dc=org
+member: uid=jmonslip,ou=utilisateurs,dc=example,dc=org
+member: uid=aterrieur1,ou=utilisateurs,dc=example,dc=org
+member: uid=trique,ou=utilisateurs,dc=example,dc=org
+member: uid=ggonfiantini,ou=utilisateurs,dc=example,dc=org
+member: uid=jsanchez,ou=utilisateurs,dc=example,dc=org
+member: uid=jclavel,ou=utilisateurs,dc=example,dc=org
+member: uid=soffer,ou=utilisateurs,dc=example,dc=org
+
+dn: cn=G4,ou=groupes,dc=example,dc=org
+objectClass: groupOfNames
+cn: G4
+member: uid=lratif,ou=utilisateurs,dc=example,dc=org
+member: uid=ohatmoilanusse,ou=utilisateurs,dc=example,dc=org
+member: uid=lbarre,ou=utilisateurs,dc=example,dc=org
+
+dn: cn=Administrateur,ou=groupes,dc=example,dc=org
+objectClass: groupOfNames
+cn: Administrateur
+member: uid=ggonfiantini,ou=utilisateurs,dc=example,dc=org
+member: uid=jsanchez,ou=utilisateurs,dc=example,dc=org
+member: uid=jclavel,ou=utilisateurs,dc=example,dc=org
+member: uid=soffer,ou=utilisateurs,dc=example,dc=org
+
+dn: uid=jnanas,ou=utilisateurs,dc=example,dc=org
+objectClass: inetOrgPerson
+uid: jnanas
+cn: Judas Nanas
+sn: Nanas
+givenName: Judas
+userPassword: jn03042000
+mail: judasnanas@gmail.com
+
+dn: uid=jnanas1,ou=utilisateurs,dc=example,dc=org
+objectClass: inetOrgPerson
+uid: jnanas1
+cn: Judas Nanas
+sn: Nanas
+givenName: Judas
+userPassword: jn12061999
+mail: judasnanas1@gmail.com
+
+dn: uid=jnanas2,ou=utilisateurs,dc=example,dc=org
+objectClass: inetOrgPerson
+uid: jnanas2
+cn: Judas Nanas
+sn: Nanas
+givenName: Judas
+userPassword: jn25052001
+mail: judasnanas2@gmail.com
+
+
+dn: uid=anasse,ou=utilisateurs,dc=example,dc=org
+objectClass: inetOrgPerson
+uid: anasse
+cn: Anna Nasse
+sn: Nasse
+givenName: Anna
+userPassword: an18051999
+mail: annanasse@gmail.com
+
+dn: uid=jneymar,ou=utilisateurs,dc=example,dc=org
+objectClass: inetOrgPerson
+uid: jneymar
+cn: Jean Neymar
+sn: Neymar
+givenName: Jean
+userPassword: jn10051999
+mail: jeanneymar@gmail.com
+
+dn: uid=gmanvussa,ou=utilisateurs,dc=example,dc=org
+objectClass: inetOrgPerson
+uid: gmanvussa
+cn: Gérard Manvussa
+sn: Manvussa
+givenName: Gérard
+userPassword: gm16051003
+mail: gerardmanvussa@gmail.com
+
+dn: uid=lpard,ou=utilisateurs,dc=example,dc=org
+objectClass: inetOrgPerson
+uid: lpard
+cn: Léo Pard
+sn: Pard
+givenName: Léo
+userPassword: lp24021999
+mail: leopard@gmail.com
+
+dn: uid=aterrieur,ou=utilisateurs,dc=example,dc=org
+objectClass: inetOrgPerson
+uid: aterrieur
+cn: Alain Terrieur
+sn: Terrieur
+givenName: Alain
+userPassword: at15032004
+mail: alainterrieur@gmail.com
+
+dn: uid=aconda,ou=utilisateurs,dc=example,dc=org
+objectClass: inetOrgPerson
+uid: aconda
+cn: Anna Conda
+sn: Conda
+givenName: Anna
+userPassword: ac28031999
+mail: annaconda@gmail.com
+
+dn: uid=ltrophie,ou=utilisateurs,dc=example,dc=org
+objectClass: inetOrgPerson
+uid: ltrophie
+cn: Lucas Trophié
+sn: Trophié
+givenName: Lucas
+userPassword: lt21032000
+mail: lucastrophie@gmail.com
+
+dn: uid=mhimum,ou=utilisateurs,dc=example,dc=org
+objectClass: inetOrgPerson
+uid: mhimum
+cn: Max Himum
+sn: Himum
+givenName: Max
+userPassword: mh09032000
+mail: maxhimum@gmail.com
+
+dn: uid=jceptes,ou=utilisateurs,dc=example,dc=org
+objectClass: inetOrgPerson
+uid: jceptes
+cn: Jacques Ceptes
+sn: Ceptes
+givenName: Jacques
+userPassword: jc28081999
+mail: jacquesceptes@gmail.com
+
+dn: uid=trique,ou=utilisateurs,dc=example,dc=org
+objectClass: inetOrgPerson
+uid: trique
+cn: Théo Rique
+sn: Rique
+givenName: Théo
+userPassword: tr24052001
+mail: theorique@gmail.com
+
+dn: uid=aterrieur1,ou=utilisateurs,dc=example,dc=org
+objectClass: inetOrgPerson
+uid: aterrieur1
+cn: Alex Terrieur
+sn: Terrieur
+givenName: Alex
+userPassword: at22061999
+mail: alexterrieur@gmail.com
+
+dn: uid=jmonslip,ou=utilisateurs,dc=example,dc=org
+objectClass: inetOrgPerson
+uid: jmonslip
+cn: Jean-Phil Monslip
+sn: Monslip
+givenName: Jean-Phil
+userPassword: jm01012002
+mail: jeanphilmonslip@gmail.com
+
+dn: uid=merrateur,ou=utilisateurs,dc=example,dc=org
+objectClass: inetOrgPerson
+uid: merrateur
+cn: Maude Errateur
+sn: Errateur
+givenName: Maude
+userPassword: me11072000
+mail: maudeerrateur@gmail.com
+
+dn: uid=jpatagueulle,ou=utilisateurs,dc=example,dc=org
+objectClass: inetOrgPerson
+uid: jpatagueulle
+cn: James Patagueulle
+sn: Patagueulle
+givenName: James
+userPassword: jp23051999
+mail: jamespatagueulle@gmail.com
+
+dn: uid=lbarre,ou=utilisateurs,dc=example,dc=org
+objectClass: inetOrgPerson
+uid: lbarre
+cn: Lenny Barre
+sn: Barre
+givenName: Lenny
+userPassword: lb05032003
+mail: lbarre@gmail.com
+
+dn: uid=ohatmoilanusse,ou=utilisateurs,dc=example,dc=org
+objectClass: inetOrgPerson
+uid: ohatmoilanusse
+cn: Odile Hatmoilanusse
+sn: Hatmoilanusse
+givenName: Odile
+userPassword: oh14052003
+mail: ohatmoilanusse@gmail.com
+
+dn: uid=lratif,ou=utilisateurs,dc=example,dc=org
+objectClass: inetOrgPerson
+uid: lratif
+cn: Luc Ratif
+sn: Ratif
+givenName: Luc
+userPassword: lr22052004
+mail: lratif@gmail.com
+
+dn: uid=ggonfiantini,ou=utilisateurs,dc=example,dc=org
+objectClass: inetOrgPerson
+uid: ggonfiantini
+cn: Gaëtan Gonfiantini
+sn: Gonfiantini
+givenName: Gaëtan
+userPassword: gaga
+mail: gaetan.gonfiantini@gmail.com
+
+dn: uid=jsanchez,ou=utilisateurs,dc=example,dc=org
+objectClass: inetOrgPerson
+uid: jsanchez
+cn: Jocelin Sanchez
+sn: Sanchez
+givenName: Jocelin
+userPassword: jojo
+mail: jocelin@gmail.com
+
+dn: uid=jclavel,ou=utilisateurs,dc=example,dc=org
+objectClass: inetOrgPerson
+uid: jclavel
+cn: Joan Clavel
+sn: Clavel
+givenName: Joan
+userPassword: jojo
+mail: joan@gmail.com
+
+dn: uid=soffer,ou=utilisateurs,dc=example,dc=org
+objectClass: inetOrgPerson
+uid: soffer
+cn: Samy Offer
+sn: Offer
+givenName: Samy
+userPassword: sasa
+mail: samy@gmail.com
+
+
