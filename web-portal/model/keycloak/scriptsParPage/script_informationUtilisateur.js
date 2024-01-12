@@ -20,7 +20,7 @@ window.addEventListener('load', () => {
             groupes.textContent = 'Groupes : ' + groupNames.join(', ');
         } else {
             // Redirection si non authentifié
-            window.location.replace(`http://${serverIp}:8888/index.html`);
+            window.location.replace(`http://${serverIp}`);
         }
     });
     // Gérer le clic sur le bouton de déconnexion
@@ -32,11 +32,11 @@ window.addEventListener('load', () => {
 // Gérer le clic sur le bouton de changement de mot de passe (Redirection vers la page de changement de mot de passe)
 // Penser à authoriser la redirection vers la page de changement de mot de passe dans keycloak
 document.getElementById("boutonChangementMDP").addEventListener("click", function() {
-    window.location.replace(`http://${serverIp}:8080/realms/CATS/protocol/openid-connect/auth?client_id=portal-cats&redirect_uri=http%3A%2F%2F${serverIp}%3A8888%2Fview%2FUtilisateurs%2FinformationsUtilisateur.html&response_mode=fragment&response_type=code&scope=openid&nonce=e8f2162f-2d69-4ed5-b1fa-8931db645871&kc_action=UPDATE_PASSWORD&code_challenge=XbvFfVo7eZX4DJLtJITjMkOfICgQl4cOJy2AeF-vlIg&code_challenge_method=S256`);
+    window.location.replace(`http://${serverIp}/keycloak/realms/CATS/protocol/openid-connect/auth?client_id=portal-cats&redirect_uri=http%3A%2F%2F${serverIp}%2Fview%2FUtilisateurs%2FinformationsUtilisateur.html&response_mode=fragment&response_type=code&scope=openid&nonce=e8f2162f-2d69-4ed5-b1fa-8931db645871&kc_action=UPDATE_PASSWORD&code_challenge=XbvFfVo7eZX4DJLtJITjMkOfICgQl4cOJy2AeF-vlIg&code_challenge_method=S256`);
 });
 
 document.getElementById("boutonCompteKeycloak").addEventListener("click", function() {
-    window.location.replace(`http://${serverIp}:8080/realms/CATS/account/#/personal-info?client_id=portal-cats`); //Mettre le lien de redirection vers le compte keycloak
+    window.location.replace(`http://${serverIp}/keycloak/realms/CATS/account/#/personal-info?client_id=portal-cats`); //Mettre le lien de redirection vers le compte keycloak
 });
 
 
@@ -77,4 +77,3 @@ document.getElementById('refreshToken').addEventListener('click', () => {
         console.log('Erreur lors de la tentative de rafraîchissement du token', err);
     });
 });
-
