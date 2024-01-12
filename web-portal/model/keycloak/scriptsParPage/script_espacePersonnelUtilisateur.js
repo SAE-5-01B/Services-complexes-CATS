@@ -1,6 +1,6 @@
 window.addEventListener('load', () => {
     const logoutBtn = document.getElementById('logout');
-    // Initialiser Keycloak et vérifier si l'utilisateur est connecté
+    // Initialiser keycloak et vérifier si l'utilisateur est connecté
     keycloak.init({ onLoad: 'check-sso' }).then(authenticated => {
         if (authenticated) {
             // Récupérer les informations de l'utilisateur

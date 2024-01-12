@@ -4,18 +4,18 @@
     <meta charset="UTF-8">
     <title>Profil de l'Utilisateur</title>
     <script src="https://cdn.jsdelivr.net/npm/keycloak-js"></script>
-    <link rel="stylesheet" href="./../Style/styleBarreNavigation.css">
-    <link rel="stylesheet" href="./../Style/stylePagesPersonnelUtilisateur.css">
+    <link rel="stylesheet" href="../style/styleBarreNavigation.css">
+    <link rel="stylesheet" href="../style/stylePagesPersonnelUtilisateur.css">
     <script src="./../../serverConfig.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/keycloak-js"></script>
-    <script src="./../../model/Keycloak/keycloak-config.js"></script>
-    <script src="./../../model/Keycloak/methode_Keycloak.js"></script>
+    <script src="../../model/keycloak/keycloak-config.js"></script>
+    <script src="../../model/keycloak/methode_Keycloak.js"></script>
 </head>
 <body>
 <nav class="navbar">
 
     <div id="gaucheNavBarre">
-        <div id="imgAndCATS"><img src="../Images/patte-de-chat-blanche.png" alt="Logo du projet Miaou" class="logo"><a id="nomProjet">CATS </a></div>
+        <div id="imgAndCATS"><img src="../images/patte-de-chat-blanche.png" alt="Logo du projet Miaou" class="logo"><a id="nomProjet">CATS </a></div>
     </div>
     <div id="millieuNavBarre">
         <a href="espacePersonnelUtilisateur.html" class="nav-link">Talbeau de bord</a>
@@ -36,7 +36,7 @@
         <h1>Vos services</h1>
         <div id="lesServicesUtilisateur">
             <div>
-                <a target="_blank" id="linkNextCloud"><img src="../Images/nextCloud.png" alt="Logo du service">
+                <a target="_blank" id="linkNextCloud"><img src="../images/nextCloud.png" alt="Logo du service">
                 <p>NextCloud</p></a>
             </div>
 
@@ -48,17 +48,17 @@
 
         <div id="divAdminKeycloak" style="display: none">
             <a target="_blank" id="linkAdminKeycloak">
-                <img src="../Images/keycloak.png" alt="Logo du service">
+                <img src="../images/keycloak.png" alt="Logo du service">
                 <p>Console admin Keycloak</p>
             </a>
         </div>
         <!--
         Faire en sorte de récupérer les groupes des utilisateurs pour afficher les liens vers les services correspondants
-        Lien pour la console admin Keycloak pour ceux qui ont le rôle "realm-adminstrator"
+        Lien pour la console admin keycloak pour ceux qui ont le rôle "realm-adminstrator"
         http://localhost:8080/admin/CATS/console/#/CATS
         -->
     </div>
 </div>
-<script src="../../model/Keycloak/scriptsParPage/script_espacePersonnelUtilisateur.js"></script>
+<script src="../../model/keycloak/scriptsParPage/script_espacePersonnelUtilisateur.js"></script>
 </body>
 </html>

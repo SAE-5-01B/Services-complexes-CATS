@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Authentification Keycloak</title>
-    <link rel="stylesheet" href="./view/Style/styleAuthentification.css">
+    <link rel="stylesheet" href="view/style/styleAuthentification.css">
     <script src="serverConfig.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/keycloak-js"></script>
-    <script src="./model/Keycloak/keycloak-config.js"></script>
+    <script src="model/keycloak/keycloak-config.js"></script>
     <script>
         // Fonction pour ouvrir et fermer le popup
         function toggleInfoPopup() {
@@ -23,7 +23,7 @@
 <div class="login-container">
 
     <div id="titrePlusImage">
-        <h1 id="titreMiaou">Bienvenue sur le portail CATS <img src="./view/Images/patte-de-chat-noir.png" class="logo" alt=""></h1>
+        <h1 id="titreMiaou">Bienvenue sur le portail CATS <img src="view/images/patte-de-chat-noir.png" class="logo" alt=""></h1>
     </div>
     <p>Connectez-vous pour accéder à votre espace personnel.</p>
     <div class="button-group">
@@ -32,7 +32,7 @@
     </div>
     <div class="button-group">
         <a onclick="toggleInfoPopup()">Informations</a>
-        <a href="./view/PortailConnexion/nousContacter.html">Nous contacter</a>
+        <a href="view/portailConnexion/nousContacter.html">Nous contacter</a>
     </div>
 </div>
 <!-- Popup pour les informations -->
@@ -49,6 +49,6 @@
 
     <button onclick="toggleInfoPopup()">Fermer</button>
 </div>
-<script src="model/Keycloak/scriptsParPage/script_portailConnexion.js"></script>
+<script src="model/keycloak/scriptsParPage/script_portailConnexion.js"></script>
 </body>
 </html>
