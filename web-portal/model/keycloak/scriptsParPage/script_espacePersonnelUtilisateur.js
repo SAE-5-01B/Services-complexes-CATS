@@ -13,22 +13,22 @@ window.addEventListener('load', () => {
                 if (groupsUtilisateurs[i] === "/Administrateur") {
                     const divAdministrateur = document.getElementById("divAdminKeycloak");
                     const linkAdminKeycloak = document.getElementById("linkAdminKeycloak");
-                    linkAdminKeycloak.href = `http://${serverIp}/keycloak/admin/CATS/console`;
+                    linkAdminKeycloak.href = `https://${serverIp}/keycloak/admin/CATS/console`;
                     divAdministrateur.style.display = "block";
                 }
             }
 
             const linkNextCloud = document.getElementById('linkNextCloud');
             if (linkNextCloud) {
-                linkNextCloud.href = `http://${serverIp}/nextcloud`;
+                linkNextCloud.href = `https://${serverIp}/nextcloud/`;
             }
             const linkRocketChat = document.getElementById('linkRocketChat');
             if (linkRocketChat) {
-                linkRocketChat.href = `http://${serverIp}/rocketchat`;
+                linkRocketChat.href = `https://${serverIp}/rocketchat/`;
             }
 
         } else {
-            window.location.replace(`http://${serverIp}`);
+            window.location.replace(`https://${serverIp}`);
         }
     });
     // Gérer le clic sur le bouton de déconnexion

@@ -8,6 +8,8 @@ echo "Adresse IP du serveur détectée : $server_ip"
 
 #-------------------------------------------------------------------------#
 
+# Keycloak
+
 # Chemin vers le fichier template JSON et le fichier de destination
 json_template="./data/REALM/royaumeV4_Template.json"
 json_file="./data/REALM/royaumeV4.json"
@@ -27,12 +29,13 @@ fi
 
 #-------------------------------------------------------------------------#
 
+# Web portal
+
 # Chemin vers le fichier serverConfig.js dans le dossier web-portal
 config_js_file="./web-portal/serverConfig.js"
 
 # Écriture ou mise à jour de l'adresse IP dans serverConfig.js
 echo "const serverIp = \"$server_ip\";" > "$config_js_file"
-
 echo "Le fichier $config_js_file a été mis à jour avec l'adresse IP du serveur : $server_ip"
 
 # Chemin vers le fichier .env
@@ -55,11 +58,19 @@ fi
 
 echo "Le fichier .env a été mis à jour avec l'adresse IP du serveur : $server_ip"
 
+sed "s/SERVER_IP/$server_ip/g" ./conf/nginxTemplate.conf > ./conf/nginx.conf
+echo "Fichier nginx.conf généré avec l'adresse IP: $server_ip"
+
 # Lancement du docker-compose
 docker compose up -d
 
 #-------------------------------------------------------------------------#
 
+# Nextcloud
+
+# shellcheck disable=SC1043
+
+<< 'COMMENT'
 url="http://$server_ip:9080"
 max_attempts=2000
 current_attempt=1
@@ -135,4 +146,6 @@ done
 if [ $current_attempt -gt $max_attempts ]; then
     echo "La page n'est pas disponible après $max_attempts tentatives."
 fi
+COMMENT
 
+echo "coucou";

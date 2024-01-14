@@ -750,7 +750,7 @@
       "clientId": "nextcloud",
       "name": "NextCloud",
       "description": "",
-      "rootUrl": "http://SERVER_IP:9080",
+      "rootUrl": "https://SERVER_IP/nextcloud",
       "adminUrl": "https://SERVER_IP/nextcloud",
       "baseUrl": "",
       "surrogateAuthRequired": false,
@@ -759,14 +759,10 @@
       "clientAuthenticatorType": "client-secret",
       "secret": "OcX8Ij59scaLVhJuLWcX84ERsK2RKYkv",
       "redirectUris": [
-        "https://SERVER_IP/*",
-        "http://SERVER_IP:9080/*",
-        "http://SERVER_IP/*"
+        "https://SERVER_IP/nextcloud/*"
       ],
       "webOrigins": [
-        "https://SERVER_IP/*",
-        "http://SERVER_IP:9080/*",
-        "http://SERVER_IP.58/*"
+        "https://SERVER_IP/nextcloud"
       ],
       "notBefore": 0,
       "bearerOnly": false,
@@ -823,10 +819,10 @@
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "redirectUris": [
-        "http://SERVER_IP:8888/*"
+        "https://SERVER_IP/*"
       ],
       "webOrigins": [
-        "http://SERVER_IP:8888"
+        "https://SERVER_IP"
       ],
       "notBefore": 0,
       "bearerOnly": false,
@@ -1400,10 +1396,10 @@
       "clientAuthenticatorType": "client-secret",
       "secret": "gKNfwdJZJDaS5oUWdVKynMDclYAa1vq9",
       "redirectUris": [
-        "http://SERVER_IP:3000/*"
+        "https://SERVER_IP/rocketchat/*"
       ],
       "webOrigins": [
-        "http://SERVER_IP:3000"
+        "https://SERVER_IP/rocketchat"
       ],
       "notBefore": 0,
       "bearerOnly": false,

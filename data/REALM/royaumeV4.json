@@ -750,8 +750,8 @@
       "clientId": "nextcloud",
       "name": "NextCloud",
       "description": "",
-      "rootUrl": "http://172.23.169.58:9080",
-      "adminUrl": "https://172.23.169.58/nextcloud",
+      "rootUrl": "https://172.23.212.254/nextcloud",
+      "adminUrl": "https://172.23.212.254/nextcloud",
       "baseUrl": "",
       "surrogateAuthRequired": false,
       "enabled": true,
@@ -759,14 +759,10 @@
       "clientAuthenticatorType": "client-secret",
       "secret": "OcX8Ij59scaLVhJuLWcX84ERsK2RKYkv",
       "redirectUris": [
-        "https://172.23.169.58/*",
-        "http://172.23.169.58:9080/*",
-        "http://172.23.169.58/*"
+        "https://172.23.212.254/nextcloud/*"
       ],
       "webOrigins": [
-        "https://172.23.169.58/*",
-        "http://172.23.169.58:9080/*",
-        "http://172.23.169.58.58/*"
+        "https://172.23.212.254/nextcloud"
       ],
       "notBefore": 0,
       "bearerOnly": false,
@@ -823,10 +819,10 @@
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "redirectUris": [
-        "http://172.23.169.58:8888/*"
+        "https://172.23.212.254/*"
       ],
       "webOrigins": [
-        "http://172.23.169.58:8888"
+        "https://172.23.212.254"
       ],
       "notBefore": 0,
       "bearerOnly": false,
@@ -1400,10 +1396,10 @@
       "clientAuthenticatorType": "client-secret",
       "secret": "gKNfwdJZJDaS5oUWdVKynMDclYAa1vq9",
       "redirectUris": [
-        "http://172.23.169.58:3000/*"
+        "https://172.23.212.254/rocketchat/*"
       ],
       "webOrigins": [
-        "http://172.23.169.58:3000"
+        "https://172.23.212.254/rocketchat"
       ],
       "notBefore": 0,
       "bearerOnly": false,
