@@ -121,36 +121,34 @@ services:
       - OVERWRITEWEBROOT=/nextcloud
 
   # Service RocketChat
+  # https://github.com/RocketChat/Rocket.Chat/issues/29332 #Des personnes qui ont la même galère que moi
+  # https://github.com/RocketChat/Rocket.Chat/issues/11460 #Problème solve en 2018
+  #
   rocketchat:
-    image: registry.rocket.chat/rocketchat/rocket.chat:${RELEASE:-latest}
+    image: registry.rocket.chat/rocketchat/rocket.chat:latest
     restart: always
     environment:
       MONGO_URL: "${MONGO_URL:-mongodb://${MONGODB_ADVERTISED_HOSTNAME:-mongodb}:${MONGODB_INITIAL_PRIMARY_PORT_NUMBER:-27017}/${MONGODB_DATABASE:-rocketchat}?replicaSet=${MONGODB_REPLICA_SET_NAME:-rs0}}"
       MONGO_OPLOG_URL: "${MONGO_OPLOG_URL:-mongodb://${MONGODB_ADVERTISED_HOSTNAME:-mongodb}:${MONGODB_INITIAL_PRIMARY_PORT_NUMBER:-27017}/local?replicaSet=${MONGODB_REPLICA_SET_NAME:-rs0}}"
-      ROOT_URL: "${ROOT_URL:-https://${SERVER_IP}/rocketchat/}"
+      ROOT_URL: "https://${SERVER_IP}/rocketchat/"
       PORT: ${PORT:-3000}
       DEPLOY_METHOD: docker
       DEPLOY_PLATFORM: ${DEPLOY_PLATFORM:-}
       REG_TOKEN: ${REG_TOKEN:-}
+      ADMIN_USERNAME: $ADMIN_USERNAMEROCKETCHAT
+      ADMIN_PASS: $ADMIN_PASSROCKETCHAT
 
       # Keycloak OAuth settings
       Accounts_OAuth_Custom_keycloak: "true"
       Accounts_OAuth_Custom_keycloak_id: "rocket-chat-client"
       Accounts_OAuth_Custom_keycloak_secret: "gKNfwdJZJDaS5oUWdVKynMDclYAa1vq9"
-      # URL du serveur Keycloak (Elle peut varié en fonction de l'installation)
-      # Pour tester en local il faut modifier le fichier hosts (C:\Windows\System32\drivers\etc) de votre machine et ajouter la ligne suivante :
-      # 127.0.0.1       keycloak
-
-      # Dans un environnement de production il faut mettre l'adresse IP du serveur Keycloak.
-
-      # NOTE : Les utilisateurs Keycloak doivent obligatoirement avoir un email et un nom d'utilisateur.
-      Accounts_OAuth_Custom_keycloak_url: "https://${SERVER_IP}/keycloak/"
+      Accounts_OAuth_Custom_keycloak_url: "https://${SERVER_IP}/keycloak"
       Accounts_OAuth_Custom_keycloak_token_path: "/realms/CATS/protocol/openid-connect/token"
       Accounts_OAuth_Custom_keycloak_identity_path: "/realms/CATS/protocol/openid-connect/userinfo"
       Accounts_OAuth_Custom_keycloak_authorize_path: "/realms/CATS/protocol/openid-connect/auth"
       Accounts_OAuth_Custom_keycloak_scope: "openid"
       Accounts_OAuth_Custom_keycloak_access_token_param: "access_token"
-      Accounts_OAuth_Custom_keycloak_button_label_text: "Connect avec Keycloak miaou miaou"
+      Accounts_OAuth_Custom_keycloak_button_label_text: "Connect avec Keycloak"
       Accounts_OAuth_Custom_keycloak_button_label_color: "#07F4F0"
       Accounts_OAuth_Custom_keycloak_login_style: "redirect"
       Accounts_OAuth_Custom_keycloak_button_color: "#13679A"
@@ -171,9 +169,9 @@ services:
       Accounts_OAuth_Custom_keycloak_avatar_field: ""
       #Supprimer la double authentification
       Accounts_TwoFactorAuthentication_Enabled: "false"
+      NODE_TLS_REJECT_UNAUTHORIZED: "0"
 
-      ADMIN_USERNAME: $ADMIN_USERNAMEROCKETCHAT
-      ADMIN_PASS: $ADMIN_PASSROCKETCHAT
+
     depends_on:
       - mongodb
     #expose:
