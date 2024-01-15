@@ -123,9 +123,9 @@ services:
   # Service RocketChat
   # https://github.com/RocketChat/Rocket.Chat/issues/29332 #Des personnes qui ont la même galère que moi
   # https://github.com/RocketChat/Rocket.Chat/issues/11460 #Problème solve en 2018
-  #
+  # https://forums.rocket.chat/t/support-for-installation-in-subdirectory-will-be-discontinued/6371 ces chiens enlèvent le support pour les sous-dossiers
   rocketchat:
-    image: registry.rocket.chat/rocketchat/rocket.chat:latest
+    image: registry.rocket.chat/rocketchat/rocket.chat:3.18.0
     restart: always
     environment:
       MONGO_URL: "${MONGO_URL:-mongodb://${MONGODB_ADVERTISED_HOSTNAME:-mongodb}:${MONGODB_INITIAL_PRIMARY_PORT_NUMBER:-27017}/${MONGODB_DATABASE:-rocketchat}?replicaSet=${MONGODB_REPLICA_SET_NAME:-rs0}}"
@@ -178,12 +178,12 @@ services:
     #  - ${PORT:-3000}
     ports:
       - "${BIND_IP:-0.0.0.0}:${HOST_PORT:-3000}:${PORT:-3000}"
-      
+
   mongodb:
-    image: docker.io/bitnami/mongodb:${MONGODB_VERSION:-5.0}
+    image: docker.io/bitnami/mongodb:${MONGODB_VERSION:-4.2}
     restart: always
     volumes:
-        - mongodb_data:/bitnami/mongodb    
+        - mongodb_data:/bitnami/mongodb
     environment:
       MONGODB_REPLICA_SET_MODE: primary
       MONGODB_REPLICA_SET_NAME: ${MONGODB_REPLICA_SET_NAME:-rs0}
