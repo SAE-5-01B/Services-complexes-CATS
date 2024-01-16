@@ -13,7 +13,7 @@ window.addEventListener('load', () => {
                 if (groupsUtilisateurs[i] === "/Administrateur") {
                     const divAdministrateur = document.getElementById("divAdminKeycloak");
                     const linkAdminKeycloak = document.getElementById("linkAdminKeycloak");
-                    linkAdminKeycloak.href = `https://${serverIp}/keycloak/admin/CATS/console`;
+                    linkAdminKeycloak.href = `https://${serverIp}/keycloak/admin/CATS/console/`;
                     divAdministrateur.style.display = "block";
                 }
             }
@@ -24,7 +24,7 @@ window.addEventListener('load', () => {
             }
             const linkRocketChat = document.getElementById('linkRocketChat');
             if (linkRocketChat) {
-                linkRocketChat.href = `https://${serverIp}/rocketchat/`;
+                linkRocketChat.href = `https://${serverIp}/rocketchat/home`;
             }
 
         } else {
