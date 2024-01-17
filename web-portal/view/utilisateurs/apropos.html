@@ -1,0 +1,67 @@
+<?php
+session_start();
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Informations de l'Utilisateur</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style/stylePagesPersonnelUtilisateur.css">
+    <link rel="stylesheet" href="../style/styleBarreNavigation.css">
+    <script src="./../../serverConfig.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/keycloak-js"></script>
+    <script src="../../model/keycloak/keycloak-config.js"></script>
+    <script src="../../model/keycloak/methode_Keycloak.js"></script>
+</head>
+<body>
+<nav class="navbar">
+    <div id="gaucheNavBarre">
+        <div id="imgAndCATS"><img src="../images/patte-de-chat-blanche.png" alt="Logo du projet Miaou" class="logo"><a
+                id="nomProjet">CATS </a></div>
+    </div>
+    <div id="millieuNavBarre">
+        <a href="espacePersonnelUtilisateur.html" class="nav-link">Talbeau de bord</a>
+        <a href="informationsUtilisateur.html" class="nav-link">Mes informations</a>
+        <a href="securite.html" class="nav-link">Sécurité</a>
+        <a href="apropos.html" class="nav-link">À propos</a>
+    </div>
+    <div id="droiteNavBarre">
+        <button id="logout">Se Déconnecter</button>
+    </div>
+</nav>
+
+<div id="contenuePage">
+    <div>
+
+        <div class="container">
+            <h1>À propos de CATS</h1>
+            <p>CATS (Central Authentication & Technology Services) est une plateforme dédiée à offrir des solutions technologiques avancées et sécurisées. Notre objectif est de fournir des services fiables et faciles d'utilisation pour améliorer votre expérience digitale.</p>
+        </div>
+
+
+        <div class="container">
+            <h2>Notre Infrastructure</h2>
+            <p>CATS s'appuie sur une infrastructure robuste, incluant un proxy sécurisé et une communication chiffrée HTTPS, garantissant la sécurité et la confidentialité des données de nos utilisateurs. Notre système d'authentification unique (SSO) avec Keycloak simplifie l'accès à différents services tout en renforçant la sécurité.</p>
+        </div>
+
+        <div class="container">
+            <h2>Nos Services Principaux</h2>
+            <ul>
+                <li><p><strong>Portail Web :</strong> Un point d'accès central pour tous nos services, offrant une expérience utilisateur intuitive et sécurisée.</p></li>
+                <li><p><strong>Service de dépôt de fichier Nextcloud :</strong> Une solution de stockage cloud flexible et sécurisée pour gérer et partager vos fichiers en toute confiance.</p></li>
+                <li><p><strong>Service de chat en ligne RocketChat :</strong> Une plateforme de communication en ligne permettant des échanges instantanés et sécurisés, facilitant la collaboration et le travail d'équipe.</p></li>
+            </ul>
+        </div>
+
+        <div class="container">
+            <h2>Notre Engagement</h2>
+            <p>Chez CATS, nous nous engageons à fournir des services de haute qualité, en mettant l'accent sur la sécurité, la fiabilité et la convivialité. Notre équipe travaille continuellement pour améliorer et innover afin de répondre au mieux à vos besoins technologiques.</p>
+        </div>
+    </div>
+</div>
+<script src="../../model/keycloak/scriptsParPage/script_informationUtilisateur.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,77 @@
+<?php
+session_start();
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sécurité</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style/stylePagesPersonnelUtilisateur.css">
+    <link rel="stylesheet" href="../style/styleBarreNavigation.css">
+    <script src="./../../serverConfig.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/keycloak-js"></script>
+    <script src="../../model/keycloak/keycloak-config.js"></script>
+    <script src="../../model/keycloak/methode_Keycloak.js"></script>
+</head>
+<body>
+<nav class="navbar">
+    <div id="gaucheNavBarre">
+        <div id="imgAndCATS"><img src="../images/patte-de-chat-blanche.png" alt="Logo du projet Miaou" class="logo"><a
+                id="nomProjet">CATS </a></div>
+    </div>
+    <div id="millieuNavBarre">
+        <a href="espacePersonnelUtilisateur.html" class="nav-link">Talbeau de bord</a>
+        <a href="informationsUtilisateur.html" class="nav-link">Mes informations</a>
+        <a href="securite.html" class="nav-link">Sécurité</a>
+        <a href="apropos.html" class="nav-link">À propos</a>
+    </div>
+    <div id="droiteNavBarre">
+        <button id="logout">Se Déconnecter</button>
+    </div>
+</nav>
+
+<div id="contenuePage">
+    <!-- Titre de la section -->
+    <div class="container">
+        <h1>Sécurité et bonnes pratiques</h1>
+        <p>Bienvenue dans notre guide de sécurité. Ici, vous trouverez des informations essentielles pour protéger vos données et naviguer en toute sécurité sur notre plateforme.</p>
+    </div>
+
+    <!-- Conteneur pour les mots de passe -->
+    <div class="container">
+        <h2>Création et gestion des mots de passe</h2>
+        <ul>
+            <li><p>Choisissez des mots de passe uniques et complexes pour chaque compte.</p></li>
+            <li><p>Changez régulièrement vos mots de passe.</p></li>
+            <li><p>Utilisez des gestionnaires de mots de passe pour garder vos mots de passe en sécurité.</p></li>
+        </ul>
+    </div>
+
+    <!-- Conteneur pour la prévention du phishing -->
+    <div class="container">
+        <h2>Éviter le phishing et les liens malveillants</h2>
+        <ul>
+            <li><p>Ne cliquez pas sur des liens dans des emails ou des messages non sollicités.</p></li>
+            <li><p>Vérifiez toujours l'URL des sites web pour vous assurer de leur authenticité.</p></li>
+            <li><p>Méfiez-vous des demandes d'information personnelle ou des offres trop alléchantes.</p></li>
+        </ul>
+    </div>
+
+    <!-- Conteneur pour les conseils généraux de sécurité -->
+    <div class="container">
+        <h2>Conseils généraux de sécurité</h2>
+        <ul>
+            <li><p>Maintenez vos logiciels et systèmes d'exploitation à jour.</p></li>
+            <li><p>Utilisez des solutions antivirus et anti-malware réputées.</p></li>
+            <li><p>Effectuez des sauvegardes régulières de vos données importantes.</p></li>
+            <li><p>Restez informé des dernières menaces de sécurité en ligne.</p></li>
+        </ul>
+    </div>
+</div>
+
+
+</body>
+</html>
+

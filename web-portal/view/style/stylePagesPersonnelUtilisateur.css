@@ -29,8 +29,12 @@ p {
     font-size: 18px;
     max-width: 600px;
 }
+li p {
+    text-align: left;
+}
+
 a{
-text-decoration: none;
+    text-decoration: none;
     color: #fff;
     font-size: 18px;
     padding: 8px 20px;
@@ -38,6 +42,7 @@ text-decoration: none;
     border-radius: 4px;
     transition: background-color 0.3s ease;
     margin: 0 10px;
+    align-content: center;
 }
 
 .container {
@@ -59,9 +64,7 @@ text-decoration: none;
     justify-content: space-between;
     margin-bottom: 20px;
 }
-#lesServicesUtilisateur  div{
-    padding: 30px;
-}
+
 #divAdminKeycloak{
     display: flex;
     flex-direction: column;
@@ -96,6 +99,13 @@ button {
 .listeInformations {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.serviceDiv {
+    display: flex;
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
