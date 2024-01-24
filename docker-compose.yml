@@ -102,7 +102,7 @@
         - MYSQL_PASSWORD=$NEXTCLOUD_MYSQL_PASSWORD
 
     nextcloud_app:
-      image: nextcloud
+      image: nextcloud:26.0.10
       container_name: nextcloud_app
       restart: always
       ports:
