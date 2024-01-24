@@ -1,223 +1,226 @@
-version: '3'
+  version: '3'
 
-services:
+  services:
 
-  # Service LDAP
-  ldap-server:
-    image: osixia/openldap
-    container_name: ldap_server_container
-    command: --copy-service
-    environment:
-      LDAP_ORGANISATION: "CATS"
-      LDAP_DOMAIN: "$DOMAINENIV2.$DOMAINENIV1"
-      LDAP_ADMIN_PASSWORD: "$LDAP_ADMIN_PASSWORD"
-      LDAP_READONLY_USER: true
-      LDAP_READONLY_USER_USERNAME: "sysUser"
-      LDAP_READONLY_USER_PASSWORD: "readOnlyPassword"
-    ports:
-      - "389:389"
-    volumes:
-      - ./data/ldap_data:/var/lib/ldap
-      - ./data/ldap_config:/etc/ldap/slapd.d
-      - ./data/LDIF:/container/service/slapd/assets/config/bootstrap/ldif/custom
+    # Service LDAP
+    ldap-server:
+      image: osixia/openldap
+      container_name: ldap_server_container
+      command: --copy-service
+      environment:
+        LDAP_ORGANISATION: "CATS"
+        LDAP_DOMAIN: "$DOMAINENIV2.$DOMAINENIV1"
+        LDAP_ADMIN_PASSWORD: "$LDAP_ADMIN_PASSWORD"
+        LDAP_READONLY_USER: true
+        LDAP_READONLY_USER_USERNAME: "sysUser"
+        LDAP_READONLY_USER_PASSWORD: "readOnlyPassword"
+      ports:
+        - "389:389"
+      volumes:
+        - ./data/ldap_data:/var/lib/ldap
+        - ./data/ldap_config:/etc/ldap/slapd.d
+        - ./data/LDIF:/container/service/slapd/assets/config/bootstrap/ldif/custom
 
-  # Service phpldapadmin
-  phpldapadmin:
-    image: osixia/phpldapadmin
-    container_name: ldap_phpldapadmin_container
-    environment:
-      PHPLDAPADMIN_LDAP_HOSTS: ldap-server
-      PHPLDAPADMIN_HTTPS: 0
-    ports:
-      - "6080:80"
-    depends_on:
-      - ldap-server
+    # Service phpldapadmin
+    phpldapadmin:
+      image: osixia/phpldapadmin
+      container_name: ldap_phpldapadmin_container
+      environment:
+        PHPLDAPADMIN_LDAP_HOSTS: ldap-server
+        PHPLDAPADMIN_HTTPS: 0
+      ports:
+        - "6080:80"
+      depends_on:
+        - ldap-server
 
-  # Service Keycloak
-  keycloak-db:
-    image: mysql:5.7
-    volumes:
-      - mysql-data:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: keycloak
-      MYSQL_USER: keycloak
-      MYSQL_PASSWORD: password
+    # Service Keycloak
+    keycloak-db:
+      image: mysql:5.7
+      volumes:
+        - mysql-data:/var/lib/mysql
+      environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: keycloak
+        MYSQL_USER: keycloak
+        MYSQL_PASSWORD: password
 
-  keycloak:
-    image: quay.io/keycloak/keycloak
-    command:
-      - "-Dkeycloak.migration.action=import"
-      - "-Dkeycloak.migration.provider=singleFile"
-      - "-Dkeycloak.migration.file=/opt/jboss/keycloak/import/royaumeV4.json"
-      - "-Dkeycloak.migration.strategy=OVERWRITE_EXISTING"
-      - "start-dev"
-    environment:
-      DB_VENDOR: MYSQL
-      DB_ADDR: mysql
-      DB_DATABASE: keycloak
-      DB_USER: keycloak
-      DB_PASSWORD: password
-      KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: admin
+    keycloak:
+      image: quay.io/keycloak/keycloak
+      command:
+        - "-Dkeycloak.migration.action=import"
+        - "-Dkeycloak.migration.provider=singleFile"
+        - "-Dkeycloak.migration.file=/opt/jboss/keycloak/import/royaumeV4.json"
+        - "-Dkeycloak.migration.strategy=OVERWRITE_EXISTING"
+        - "start-dev"
+      environment:
+        DB_VENDOR: MYSQL
+        DB_ADDR: mysql
+        DB_DATABASE: keycloak
+        DB_USER: keycloak
+        DB_PASSWORD: password
+        KEYCLOAK_ADMIN: admin
+        KEYCLOAK_ADMIN_PASSWORD: admin
 
-      KC_PROXY: edge
-      KC_HOSTNAME_ADMIN_URL: "https://${SERVER_IP}/keycloak"
-      KC_HOSTNAME_URL: "https://${SERVER_IP}/keycloak"
+        KC_PROXY: edge
+        KC_HOSTNAME_ADMIN_URL: "https://${SERVER_IP}/keycloak"
+        KC_HOSTNAME_URL: "https://${SERVER_IP}/keycloak"
 
-    volumes:
-      - ./data/REALM:/opt/jboss/keycloak/import
-    #ports:
-    #  - 8080:8080
-    depends_on:
-      - keycloak-db
+      volumes:
+        - ./data/REALM:/opt/jboss/keycloak/import
+      #ports:
+      #  - 8080:8080
+      depends_on:
+        - keycloak-db
 
-  # Service Web-Portal
-  web-portal:
-    image: php:apache
-    container_name: web_portal_container
-    environment:
-      - LDAP_ADMIN_PASSWORD=$LDAP_ADMIN_PASSWORD
-      - DOMAINENIV1=$DOMAINENIV1
-      - DOMAINENIV2=$DOMAINENIV2
-      - IP_SERVER=$SERVER_IP
-    volumes:
-      - ./web-portal:/var/www/html
+    # Service Web-Portal
+    web-portal:
+      image: php:apache
+      container_name: web_portal_container
+      environment:
+        - LDAP_ADMIN_PASSWORD=$LDAP_ADMIN_PASSWORD
+        - DOMAINENIV1=$DOMAINENIV1
+        - DOMAINENIV2=$DOMAINENIV2
+        - IP_SERVER=$SERVER_IP
+      volumes:
+        - ./web-portal:/var/www/html
 
-  # Service Nextcloud
-  # BD
-  nextcloud_db:
-    image: mariadb
-    container_name: nextcloud_db
-    restart: always
-    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
-    #volumes:
-    #  - ./data/nextcloud_db_data:/var/lib/mysql
-    volumes:
-      - nextcloud_db_data:/var/lib/mysql
-    environment:
-      - MYSQL_ROOT_PASSWORD=$NEXTCLOUD_MYSQL_ROOT_PASSWORD
-      - MYSQL_DATABASE=$NEXTCLOUD_MYSQL_DATABASE
-      - MYSQL_USER=$NEXTCLOUD_MYSQL_USER
-      - MYSQL_PASSWORD=$NEXTCLOUD_MYSQL_PASSWORD
+    # Service Nextcloud
+    # BD
+    nextcloud_db:
+      image: mariadb
+      container_name: nextcloud_db
+      restart: always
+      command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+      #volumes:
+      #  - ./data/nextcloud_db_data:/var/lib/mysql
+      volumes:
+        - nextcloud_db_data:/var/lib/mysql
+      environment:
+        - MYSQL_ROOT_PASSWORD=$NEXTCLOUD_MYSQL_ROOT_PASSWORD
+        - MYSQL_DATABASE=$NEXTCLOUD_MYSQL_DATABASE
+        - MYSQL_USER=$NEXTCLOUD_MYSQL_USER
+        - MYSQL_PASSWORD=$NEXTCLOUD_MYSQL_PASSWORD
 
-  nextcloud_app:
-    image: nextcloud
-    container_name: nextcloud_app
-    restart: always
-    ports:
-      - 9080:80
-    links:
-      - nextcloud_db
-    volumes:
-      #- ./data/nextcloud_data:/var/www/html
-        - nextcloud_data:/var/www/html
-    environment:
-      - NEXTCLOUD_ADMIN_USER=$NEXTCLOUD_ADMIN_USER
-      - NEXTCLOUD_ADMIN_PASSWORD=$NEXTCLOUD_ADMIN_PASSWORD
-      - MYSQL_HOST=nextcloud_db
-      - MYSQL_DATABASE=$NEXTCLOUD_MYSQL_DATABASE
-      - MYSQL_USER=$NEXTCLOUD_MYSQL_USER
-      - MYSQL_PASSWORD=$NEXTCLOUD_MYSQL_PASSWORD
+    nextcloud_app:
+      image: nextcloud
+      container_name: nextcloud_app
+      restart: always
+      ports:
+        - 9080:80
+      links:
+        - nextcloud_db
+      volumes:
+        #- ./data/nextcloud_data:/var/www/html
+          - nextcloud_data:/var/www/html
+          - ./Certificats:/usr/local/share/ca-certificates/:ro
+      environment:
+        - NEXTCLOUD_ADMIN_USER=$NEXTCLOUD_ADMIN_USER
+        - NEXTCLOUD_ADMIN_PASSWORD=$NEXTCLOUD_ADMIN_PASSWORD
+        - MYSQL_HOST=nextcloud_db
+        - MYSQL_DATABASE=$NEXTCLOUD_MYSQL_DATABASE
+        - MYSQL_USER=$NEXTCLOUD_MYSQL_USER
+        - MYSQL_PASSWORD=$NEXTCLOUD_MYSQL_PASSWORD
 
-      - NEXTCLOUD_TRUSTED_DOMAINS=$SERVER_IP
-      - OVERWRITEPROTOCOL=https
-      - OVERWRITECLIURL=https://$SERVER_IP/nextcloud
-      - OVERWRITEWEBROOT=/nextcloud
+        - NEXTCLOUD_TRUSTED_DOMAINS=$SERVER_IP
+        - OVERWRITEPROTOCOL=https
+        - OVERWRITECLIURL=https://$SERVER_IP/nextcloud
+        - OVERWRITEWEBROOT=/nextcloud
+        - NC_ALLOW_LOCAL_REMOTE_SERVERS= true
 
-  # Service RocketChat
-  # https://github.com/RocketChat/Rocket.Chat/issues/29332 #Des personnes qui ont la même galère que moi
-  # https://github.com/RocketChat/Rocket.Chat/issues/11460 #Problème solve en 2018
-  # https://forums.rocket.chat/t/support-for-installation-in-subdirectory-will-be-discontinued/6371 ces chiens enlèvent le support pour les sous-dossiers
-  rocketchat:
-    image: registry.rocket.chat/rocketchat/rocket.chat:3.18.0
-    restart: always
-    environment:
-      MONGO_URL: "${MONGO_URL:-mongodb://${MONGODB_ADVERTISED_HOSTNAME:-mongodb}:${MONGODB_INITIAL_PRIMARY_PORT_NUMBER:-27017}/${MONGODB_DATABASE:-rocketchat}?replicaSet=${MONGODB_REPLICA_SET_NAME:-rs0}}"
-      MONGO_OPLOG_URL: "${MONGO_OPLOG_URL:-mongodb://${MONGODB_ADVERTISED_HOSTNAME:-mongodb}:${MONGODB_INITIAL_PRIMARY_PORT_NUMBER:-27017}/local?replicaSet=${MONGODB_REPLICA_SET_NAME:-rs0}}"
-      ROOT_URL: "https://${SERVER_IP}/rocketchat/"
-      PORT: ${PORT:-3000}
-      DEPLOY_METHOD: docker
-      DEPLOY_PLATFORM: ${DEPLOY_PLATFORM:-}
-      REG_TOKEN: ${REG_TOKEN:-}
-      ADMIN_USERNAME: $ADMIN_USERNAMEROCKETCHAT
-      ADMIN_PASS: $ADMIN_PASSROCKETCHAT
 
-      # Keycloak OAuth settings
-      Accounts_OAuth_Custom_keycloak: "true"
-      Accounts_OAuth_Custom_keycloak_id: "rocket-chat-client"
-      Accounts_OAuth_Custom_keycloak_secret: "gKNfwdJZJDaS5oUWdVKynMDclYAa1vq9"
-      Accounts_OAuth_Custom_keycloak_url: "https://${SERVER_IP}/keycloak"
-      Accounts_OAuth_Custom_keycloak_token_path: "/realms/CATS/protocol/openid-connect/token"
-      Accounts_OAuth_Custom_keycloak_identity_path: "/realms/CATS/protocol/openid-connect/userinfo"
-      Accounts_OAuth_Custom_keycloak_authorize_path: "/realms/CATS/protocol/openid-connect/auth"
-      Accounts_OAuth_Custom_keycloak_scope: "openid"
-      Accounts_OAuth_Custom_keycloak_access_token_param: "access_token"
-      Accounts_OAuth_Custom_keycloak_button_label_text: "Connect avec Keycloak"
-      Accounts_OAuth_Custom_keycloak_button_label_color: "#07F4F0"
-      Accounts_OAuth_Custom_keycloak_login_style: "redirect"
-      Accounts_OAuth_Custom_keycloak_button_color: "#13679A"
-      Accounts_OAuth_Custom_keycloak_token_sent_via: "payload"
-      Accounts_OAuth_Custom_keycloak_identity_token_sent_via: "header"
-      Accounts_OAuth_Custom_keycloak_key_field: "username"
-      Accounts_OAuth_Custom_keycloak_username_field: "preferred_username"
-      Accounts_OAuth_Custom_keycloak_name_field: "name"
-      Accounts_OAuth_Custom_keycloak_email_field: "email"
-      Accounts_OAuth_Custom_keycloak_roles_claim: ""
-      Accounts_OAuth_Custom_keycloak_groups_claim: ""
-      Accounts_OAuth_Custom_keycloak_groups_channel_map: ""
-      Accounts_OAuth_Custom_keycloak_channels_admin: "rocket.cat"
-      Accounts_OAuth_Custom_keycloak_merge_users: "true"
-      Accounts_OAuth_Custom_keycloak_map_channels: ""
-      Accounts_OAuth_Custom_keycloak_merge_roles: "false"
-      Accounts_OAuth_Custom_keycloak_show_button: "true"
-      Accounts_OAuth_Custom_keycloak_avatar_field: ""
-      #Supprimer la double authentification
-      Accounts_TwoFactorAuthentication_Enabled: "false"
-      NODE_TLS_REJECT_UNAUTHORIZED: "0"
+    # Service RocketChat
+    # https://github.com/RocketChat/Rocket.Chat/issues/29332 #Des personnes qui ont la même galère que moi
+    # https://github.com/RocketChat/Rocket.Chat/issues/11460 #Problème solve en 2018
+    # https://forums.rocket.chat/t/support-for-installation-in-subdirectory-will-be-discontinued/6371 ces chiens enlèvent le support pour les sous-dossiers
+    rocketchat:
+      image: registry.rocket.chat/rocketchat/rocket.chat:3.18.0
+      restart: always
+      environment:
+        MONGO_URL: "${MONGO_URL:-mongodb://${MONGODB_ADVERTISED_HOSTNAME:-mongodb}:${MONGODB_INITIAL_PRIMARY_PORT_NUMBER:-27017}/${MONGODB_DATABASE:-rocketchat}?replicaSet=${MONGODB_REPLICA_SET_NAME:-rs0}}"
+        MONGO_OPLOG_URL: "${MONGO_OPLOG_URL:-mongodb://${MONGODB_ADVERTISED_HOSTNAME:-mongodb}:${MONGODB_INITIAL_PRIMARY_PORT_NUMBER:-27017}/local?replicaSet=${MONGODB_REPLICA_SET_NAME:-rs0}}"
+        ROOT_URL: "https://${SERVER_IP}/rocketchat/"
+        PORT: ${PORT:-3000}
+        DEPLOY_METHOD: docker
+        DEPLOY_PLATFORM: ${DEPLOY_PLATFORM:-}
+        REG_TOKEN: ${REG_TOKEN:-}
+        ADMIN_USERNAME: $ADMIN_USERNAMEROCKETCHAT
+        ADMIN_PASS: $ADMIN_PASSROCKETCHAT
 
-    depends_on:
-      - mongodb
-    #expose:
-    #  - ${PORT:-3000}
-    ports:
-      - "${BIND_IP:-0.0.0.0}:${HOST_PORT:-3000}:${PORT:-3000}"
+        # Keycloak OAuth settings
+        Accounts_OAuth_Custom_keycloak: "true"
+        Accounts_OAuth_Custom_keycloak_id: "rocket-chat-client"
+        Accounts_OAuth_Custom_keycloak_secret: "gKNfwdJZJDaS5oUWdVKynMDclYAa1vq9"
+        Accounts_OAuth_Custom_keycloak_url: "https://${SERVER_IP}/keycloak"
+        Accounts_OAuth_Custom_keycloak_token_path: "/realms/CATS/protocol/openid-connect/token"
+        Accounts_OAuth_Custom_keycloak_identity_path: "/realms/CATS/protocol/openid-connect/userinfo"
+        Accounts_OAuth_Custom_keycloak_authorize_path: "/realms/CATS/protocol/openid-connect/auth"
+        Accounts_OAuth_Custom_keycloak_scope: "openid"
+        Accounts_OAuth_Custom_keycloak_access_token_param: "access_token"
+        Accounts_OAuth_Custom_keycloak_button_label_text: "Connect avec Keycloak"
+        Accounts_OAuth_Custom_keycloak_button_label_color: "#07F4F0"
+        Accounts_OAuth_Custom_keycloak_login_style: "redirect"
+        Accounts_OAuth_Custom_keycloak_button_color: "#13679A"
+        Accounts_OAuth_Custom_keycloak_token_sent_via: "payload"
+        Accounts_OAuth_Custom_keycloak_identity_token_sent_via: "header"
+        Accounts_OAuth_Custom_keycloak_key_field: "username"
+        Accounts_OAuth_Custom_keycloak_username_field: "preferred_username"
+        Accounts_OAuth_Custom_keycloak_name_field: "name"
+        Accounts_OAuth_Custom_keycloak_email_field: "email"
+        Accounts_OAuth_Custom_keycloak_roles_claim: ""
+        Accounts_OAuth_Custom_keycloak_groups_claim: ""
+        Accounts_OAuth_Custom_keycloak_groups_channel_map: ""
+        Accounts_OAuth_Custom_keycloak_channels_admin: "rocket.cat"
+        Accounts_OAuth_Custom_keycloak_merge_users: "true"
+        Accounts_OAuth_Custom_keycloak_map_channels: ""
+        Accounts_OAuth_Custom_keycloak_merge_roles: "false"
+        Accounts_OAuth_Custom_keycloak_show_button: "true"
+        Accounts_OAuth_Custom_keycloak_avatar_field: ""
+        #Supprimer la double authentification
+        Accounts_TwoFactorAuthentication_Enabled: "false"
+        NODE_TLS_REJECT_UNAUTHORIZED: "0"
 
-  mongodb:
-    image: docker.io/bitnami/mongodb:${MONGODB_VERSION:-4.2}
-    restart: always
-    volumes:
-        - mongodb_data:/bitnami/mongodb
-    environment:
-      MONGODB_REPLICA_SET_MODE: primary
-      MONGODB_REPLICA_SET_NAME: ${MONGODB_REPLICA_SET_NAME:-rs0}
-      MONGODB_PORT_NUMBER: ${MONGODB_PORT_NUMBER:-27017}
-      MONGODB_INITIAL_PRIMARY_HOST: ${MONGODB_INITIAL_PRIMARY_HOST:-mongodb}
-      MONGODB_INITIAL_PRIMARY_PORT_NUMBER: ${MONGODB_INITIAL_PRIMARY_PORT_NUMBER:-27017}
-      MONGODB_ADVERTISED_HOSTNAME: ${MONGODB_ADVERTISED_HOSTNAME:-mongodb}
-      MONGODB_ENABLE_JOURNAL: ${MONGODB_ENABLE_JOURNAL:-true}
-      ALLOW_EMPTY_PASSWORD: ${ALLOW_EMPTY_PASSWORD:-yes}
+      depends_on:
+        - mongodb
+      #expose:
+      #  - ${PORT:-3000}
+      ports:
+        - "${BIND_IP:-0.0.0.0}:${HOST_PORT:-3000}:${PORT:-3000}"
 
-  # Service Nginx
-  nginx:
-    image: nginx:1.23.3-alpine
-    container_name: nginx_container
-    command: [ "nginx-debug", '-g', 'daemon off;' ]
-    volumes:
-      - ./conf/nginx.conf:/etc/nginx/nginx.conf
-      - ./Certificats:/etc/Certificats:ro
-    ports:
-      - "80:80"
-      - "443:443"
-    depends_on:
-      - nextcloud_app
-      - web-portal
-      
-volumes:
-  mysql-data:
-  nextcloud_db_data:
-  nextcloud_data:
-  nextcloud_config:
-  openproject_data:
+    mongodb:
+      image: docker.io/bitnami/mongodb:${MONGODB_VERSION:-4.2}
+      restart: always
+      volumes:
+          - mongodb_data:/bitnami/mongodb
+      environment:
+        MONGODB_REPLICA_SET_MODE: primary
+        MONGODB_REPLICA_SET_NAME: ${MONGODB_REPLICA_SET_NAME:-rs0}
+        MONGODB_PORT_NUMBER: ${MONGODB_PORT_NUMBER:-27017}
+        MONGODB_INITIAL_PRIMARY_HOST: ${MONGODB_INITIAL_PRIMARY_HOST:-mongodb}
+        MONGODB_INITIAL_PRIMARY_PORT_NUMBER: ${MONGODB_INITIAL_PRIMARY_PORT_NUMBER:-27017}
+        MONGODB_ADVERTISED_HOSTNAME: ${MONGODB_ADVERTISED_HOSTNAME:-mongodb}
+        MONGODB_ENABLE_JOURNAL: ${MONGODB_ENABLE_JOURNAL:-true}
+        ALLOW_EMPTY_PASSWORD: ${ALLOW_EMPTY_PASSWORD:-yes}
 
-  mongodb_data: { driver: local }
+    # Service Nginx
+    nginx:
+      image: nginx:1.23.3-alpine
+      container_name: nginx_container
+      command: [ "nginx-debug", '-g', 'daemon off;' ]
+      volumes:
+        - ./conf/nginx.conf:/etc/nginx/nginx.conf
+        - ./Certificats:/etc/Certificats:ro
+      ports:
+        - "80:80"
+        - "443:443"
+      depends_on:
+        - nextcloud_app
+        - web-portal
+
+  volumes:
+    mysql-data:
+    nextcloud_db_data:
+    nextcloud_data:
+    nextcloud_config:
+    openproject_data:
+
+    mongodb_data: { driver: local }
