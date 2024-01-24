@@ -1,102 +1,74 @@
 # CATS - Central Authentication & Technology Services
 
-## Scripts
+Bienvenue sur le dépôt officiel du projet CATS. 
 
-Différents scripts peuvent être trouvé dans le dossier [`scripts`](./scripts). Ceux-ci doivent être exécutés depuis la racine du projet.
+## Présentation
 
-### [`purge.sh`](./scripts/purge.sh)
+Tout d'abord que veut dire CATS ? CATS signifie Central Authentication & Technology Services.
 
-Réinitialise tous les services, en vidant l'entièreté du dossier `data/`, contenant les données et les fichiers de configuration.
+Ce projet a pour but de centraliser des services qu'une entreprise aurait besoin.
 
-### [`run.sh`](./scripts/run.sh)
+## Services
 
-Lance (ou re-lance les conteneurs). Ajoute aussi les nœuds *utilisateurs* et *groupes*.
+Les services présents dans ce projet sont les suivants :
 
-### [`ldapadd.sh`](./scripts/ldapadd.sh)
+Côté Frontend :
 
-Ajoute le contenu du fichier *ldif* en argument à l'annuaire LDAP. Nécessite d'avoir lancé les services.
+- Serveur Apache : Mise en place d'un serveur Apache pour centraliser et faciliter l'accès aux différents services.
 
-## Application-Web
+- RocketChat : Intégration de RocketChat, un service de messagerie instantanée, optimisant la communication interne.
 
-### Description
+- NextCloud : Configuration de NextCloud pour le stockage et la gestion des fichiers, offrant une solution robuste pour le dépôt de fichiers.
 
-Cette application web intègre un serveur web sophistiqué conçu pour authentifier les utilisateurs via un service LDAP. 
-Après une authentification réussie, l'utilisateur est redirigé vers la page d'accueil, qui offre une vue détaillée des informations de son compte LDAP ainsi que des services auxquels il a accès.
+Côté Backend :
 
-Selon les privilèges de l'utilisateur, il peut accéder à certains services.
+- Keycloak : Implémentation de Keycloak pour l'authentification des utilisateurs, un élément clé pour la gestion de l'identité et l'accès.
 
-Les utilisateurs clients ont accès à :
+- Plusieurs bases de Données : Établissement d'une base de données pour assurer la persistance et la sécurité des données utilisateurs.
 
-- Accès à sa base de données. 
-- Accès à "nextcloud" qui est un service de stockage de fichiers en ligne.
+- LDAP : Utilisation de LDAP comme annuaire pour stocker les informations des clients, garantissant une gestion efficace des utilisateurs.
 
-Les utilisateurs administrateurs ont accès à :
+- Nginx : Mise en place d'un serveur Nginx pour la gestion des requêtes et la communication entre les différents services.
 
-- Accès à sa base de données.
-- Accès à "nextcloud" qui est un service de stockage de fichiers en ligne.
-- Accès à "phpldammin" qui est un service de gestion de base de données LDAP.
+## Structure des applications
 
-### Détails techniques 
+Dans le diagramme ci-dessous, vous pouvez voir la structure des applications et leurs relations.
 
-Ce site à été développé en utilisant les bonnes pratiques de programmation, donc facilement maintenable et évolutif.
+![structureApplications.png](imgREADME%2FstructureApplications.png)
 
-Notamment ce site utilise le modèle MVC (Modèle-Vue-Contrôleur). 
+## Installation
 
-### Sécurisation du site
+Nous avons conçu ce projet pour qu'il soit installé sur un serveur Linux.
 
-Dans le cadre de la mise en place de la sécurité sur notre site, nous avons opté pour un certificat SSL auto-signé afin de mettre en œuvre une communication chiffrée entre le client et le serveur.
+C'est pour cela que nous avons deux scripts qui permettent d'installer les services sur un serveur Linux.
 
-#### Génération du certificat auto-signé
+### Script n°1 : Installation de docker
 
-Pour créer ce certificat, nous avons utilisé la librairie OpenSSL, qui est un outil robuste pour la gestion de certificats et autres fonctionnalités liées à la cryptographie. La commande suivante a été utilisée pour générer le certificat :
+Docker est essentiel pour l'installation de nos services. C'est pour cela que nous avons créé un script qui permet d'installer docker sur un serveur Linux.
+
+Ce script ne fait pas que simplement installer docker, il fait d'abord une désinstallation de docker si il est déjà installé, puis il installe docker et docker-compose sur 
+des bases saines.
+
+Pour lancer ce script, placez-vous à la racine du projet et executez les commandes suivantes :
 
 ```bash
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout localhost.key -out localhost.crt
+chmod +x scriptPurgeDocker.sh
+./scriptPurgeDocker.sh
 ```
 
-Cette commande produit deux fichiers :
+### Script n°2 : Installation des services
 
-- `localhost.key` : Il s'agit de la clé privée.
-- `localhost.crt` : Il s'agit du certificat auto-signé.
+Ce script permet d'installer tous les services du projet et égalment les configurer. 
 
-Le certificat sera valide pendant 365 jours à compter de sa date de création.
+Pour lancer ce script, placez-vous à la racine du projet et executez les commandes suivantes :
 
-### Configuration du serveur Apache
-
-La mise en place de la sécurité SSL/TLS nécessite certaines configurations sur le serveur Apache. Voici les étapes suivies pour la configuration :
-
-#### 1. Création d'un VirtualHost
-
-Pour servir le contenu via HTTPS, nous avons configuré un `VirtualHost` pour écouter sur le port 443. Voici la configuration :
-
-```apache
-<VirtualHost *:443>
-ServerName  localhost
-DocumentRoot /var/www/html
-SSLEngine on
-SSLCertificateFile /etc/ssl/certs/localhost.crt
-SSLCertificateKeyFile /etc/ssl/private/localhost.key
-</VirtualHost>
+```bash
+chmod +x ./init.sh
+./init.sh
 ```
 
-#### 2. Modification du port d'écoute
-
-Par défaut, Apache écoute sur le port 80 pour les requêtes HTTP. Puisque nous configurons le serveur pour utiliser HTTPS, nous avons modifié Apache pour qu'il écoute sur le port 443, le port standard pour les requêtes HTTPS.
-
-#### 3. Activation du module SSL sur Apache
-
-Le support SSL/TLS sur Apache nécessite que le module `mod_ssl` soit activé. Cette étape est essentielle pour que la configuration précédente fonctionne correctement.
+## Test de l'installation :
 
 
-#### Limitations et précautions
 
-Il est important de noter que les certificats auto-signés ne sont pas reconnus comme étant de confiance par les navigateurs par défaut. 
-Les utilisateurs se verront donc présenter un avertissement de sécurité lorsqu'ils accèdent au site pour la première fois. 
-Pour contourner cet avertissement en environnement de développement, le certificat doit être ajouté manuellement à la liste des certificats de confiance du navigateur. 
-Cependant, cette approche n'est pas recommandée pour les environnements de production.
-
-#### Alternative : Certificats valides
-
-Pour un environnement de production, il est essentiel d'utiliser un certificat émis par une autorité de certification (CA) reconnue. 
-Ces certificats sont automatiquement reconnus par la plupart des navigateurs, garantissant ainsi que la communication est sécurisée sans avertissements inutiles pour les utilisateurs finaux. 
-Une des autorités de certification gratuites et populaires est "Let's Encrypt". Pour obtenir un tel certificat, il est nécessaire d'avoir un nom de domaine public.
+##
