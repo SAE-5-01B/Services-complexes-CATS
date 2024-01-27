@@ -19,7 +19,7 @@
       volumes:
         - ./data/ldap_data:/var/lib/ldap
         - ./data/ldap_config:/etc/ldap/slapd.d
-        - ./data/LDIF:/container/service/slapd/assets/config/bootstrap/ldif/custom
+        - ./conf/LDIF:/container/service/slapd/assets/config/bootstrap/ldif/custom
 
     # Service phpldapadmin
     phpldapadmin:
@@ -66,9 +66,8 @@
         KC_HOSTNAME_URL: "https://${SERVER_IP}/keycloak"
 
       volumes:
-        - ./data/REALM:/opt/jboss/keycloak/import
-      #ports:
-      #  - 8080:8080
+        - ./conf/REALM:/opt/jboss/keycloak/import
+
       depends_on:
         - keycloak-db
 

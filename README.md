@@ -117,3 +117,4 @@ Sur cette page, vous avez accès à tous les services du projet, et comme il y a
 
 Si vous avez des problèmes avec l'installation ou si vous avez des questions, vous pouvez nous contacter à l'une des adresses suivantes :
 
+gaetan.gonfinatini@gmail.com

@@ -11,8 +11,8 @@ echo "Adresse IP du serveur détectée : $server_ip"
 # Keycloak
 
 # Chemin vers le fichier template JSON et le fichier de destination
-json_template="./data/REALM/royaumeV4_Template.json"
-json_file="./data/REALM/royaumeV4.json"
+json_template="./conf/REALM/royaumeV4_Template.json"
+json_file="./conf/REALM/royaumeV4.json"
 
 # Vérifie si le fichier template JSON existe
 if [ -f "$json_template" ]; then
