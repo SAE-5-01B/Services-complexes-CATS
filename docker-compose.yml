@@ -111,6 +111,7 @@
       volumes:
         #- ./data/nextcloud_data:/var/www/html
           - nextcloud_data:/var/www/html
+          - nextcloud_config:/var/www/html/config
           - ./Certificats:/usr/local/share/ca-certificates/:ro
       environment:
         - NEXTCLOUD_ADMIN_USER=$NEXTCLOUD_ADMIN_USER
