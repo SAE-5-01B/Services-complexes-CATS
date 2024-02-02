@@ -35,6 +35,7 @@ if (isset($_GET['emailSent'])) {
         <a href="espacePersonnelUtilisateur.html" class="nav-link">Talbeau de bord</a>
         <a href="informationsUtilisateur.html" class="nav-link">Mes informations</a>
         <a href="securite.html" class="nav-link">Sécurité</a>
+        <a href="politique-confidentialites-donnees.html" class="nav-link">Politique de confidentialité</a>
         <a href="apropos.php" class="nav-link">À propos</a>
     </div>
     <div id="droiteNavBarre">
@@ -46,27 +47,27 @@ if (isset($_GET['emailSent'])) {
 
         <div class="container">
             <h1>À propos de CATS</h1>
-            <p class="AproposText">CATS (Central Authentication & Technology Services) est une plateforme dédiée à offrir des solutions technologiques avancées et sécurisées. Notre objectif est de fournir des services fiables et faciles d'utilisation pour améliorer votre expérience digitale.</p>
+            <p class="JustifyText">CATS (Central Authentication & Technology Services) est une plateforme dédiée à offrir des solutions technologiques avancées et sécurisées. Notre objectif est de fournir des services fiables et faciles d'utilisation pour améliorer votre expérience digitale.</p>
         </div>
 
 
         <div class="container">
             <h2>Notre Infrastructure</h2>
-            <p class="AproposText">CATS s'appuie sur une infrastructure robuste, incluant un proxy sécurisé et une communication chiffrée HTTPS, garantissant la sécurité et la confidentialité des données de nos utilisateurs. Notre système d'authentification unique (SSO) avec Keycloak simplifie l'accès à différents services tout en renforçant la sécurité.</p>
+            <p class="JustifyText">CATS s'appuie sur une infrastructure robuste, incluant un proxy sécurisé et une communication chiffrée HTTPS, garantissant la sécurité et la confidentialité des données de nos utilisateurs. Notre système d'authentification unique (SSO) avec Keycloak simplifie l'accès à différents services tout en renforçant la sécurité.</p>
         </div>
 
         <div class="container">
             <h2>Nos Services Principaux</h2>
             <ul>
-                <li><p class="AproposText"><strong>Portail Web :</strong> Un point d'accès central pour tous nos services, offrant une expérience utilisateur intuitive et sécurisée.</p></li>
-                <li><p class="AproposText"> <strong>Service de dépôt de fichier Nextcloud :</strong> Une solution de stockage cloud flexible et sécurisée pour gérer et partager vos fichiers en toute confiance.</p></li>
-                <li><p class="AproposText"><strong>Service de chat en ligne RocketChat :</strong> Une plateforme de communication en ligne permettant des échanges instantanés et sécurisés, facilitant la collaboration et le travail d'équipe.</p></li>
+                <li><p class="JustifyText"><strong>Portail Web :</strong> Un point d'accès central pour tous nos services, offrant une expérience utilisateur intuitive et sécurisée.</p></li>
+                <li><p class="JustifyText"> <strong>Service de dépôt de fichier Nextcloud :</strong> Une solution de stockage cloud flexible et sécurisée pour gérer et partager vos fichiers en toute confiance.</p></li>
+                <li><p class="JustifyText"><strong>Service de chat en ligne RocketChat :</strong> Une plateforme de communication en ligne permettant des échanges instantanés et sécurisés, facilitant la collaboration et le travail d'équipe.</p></li>
             </ul>
         </div>
 
         <div class="container">
             <h2>Notre Engagement</h2>
-            <p class="AproposText">Chez CATS, nous nous engageons à fournir des services de haute qualité, en mettant l'accent sur la sécurité, la fiabilité et la convivialité. Notre équipe travaille continuellement pour améliorer et innover afin de répondre au mieux à vos besoins technologiques.</p>
+            <p class="JustifyText">Chez CATS, nous nous engageons à fournir des services de haute qualité, en mettant l'accent sur la sécurité, la fiabilité et la convivialité. Notre équipe travaille continuellement pour améliorer et innover afin de répondre au mieux à vos besoins technologiques.</p>
         </div>
 
 

@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Profil de l'Utilisateur</title>
+    <title>Politique confidentialité</title>
     <script src="https://cdn.jsdelivr.net/npm/keycloak-js"></script>
     <link rel="stylesheet" href="../style/styleBarreNavigation.css">
     <link rel="stylesheet" href="../style/stylePagesPersonnelUtilisateur.css">
@@ -26,41 +26,34 @@
         <a href="apropos.php" class="nav-link">À propos</a>
     </div>
     <div id="droiteNavBarre">
-            <button id="logout">Se Déconnecter</button>
+        <button id="logout">Se Déconnecter</button>
     </div>
 </nav>
 <div id="contenuePage">
     <div class="container">
-        <h1 id="welcomeMessage"></h1>
-        <p>Bienvenue sur votre espace CATS. Utilisez les liens ci-dessous pour naviguer vers les différents services.</p>
+        <h1>Politique de Confidentialité et Gestion des Données</h1>
+
+        <p class="JustifyText">Chez CATS, nous accordons une importance primordiale à la confidentialité et à la sécurité des données de nos utilisateurs...</p>
+
+
+        <h2>Respect de la Vie Privée</h2>
+        <p class="JustifyText">Notre engagement à la protection de vos données est inébranlable. Nous collectons uniquement les informations essentielles pour fournir nos services, en assurant une utilisation responsable.</p>
+
+        <h2>Sécurité des Données</h2>
+        <p class="JustifyText">Nous appliquons des mesures de sécurité avancées pour protéger vos informations contre tout accès non autorisé, en utilisant notamment le chiffrement des données sensibles.</p>
+
+        <h2>Transparence et Contrôle</h2>
+        <p class="JustifyText">Vous avez le contrôle total sur vos données, avec la possibilité d'accéder, de corriger ou de demander leur suppression à tout moment.</p>
+
+        <h2>Conformité Légale</h2>
+        <p class="JustifyText">Nous respectons strictement les lois et réglementations en vigueur, en adaptant continuellement notre politique pour garantir la conformité.</p>
+
+        <h2>Engagement envers les Utilisateurs</h2>
+        <p class="JustifyText">Votre confiance est notre priorité. Nous nous engageons à maintenir cette confiance par une communication claire et un support dédié à la protection de votre vie privée.</p>
     </div>
 
-    <div class="container">
-        <h1>Vos services</h1>
-        <div id="lesServicesUtilisateur">
-            <div class="serviceDiv">
-                <a target="_blank" id="linkNextCloud"><img src="../images/nextCloud.png" alt="Logo du service">
-                <p>NextCloud</p></a>
-            </div>
 
-            <div class="serviceDiv">
-                <a target="_blank" id="linkRocketChat"><img src="../images/rocketchat.png" alt="Logo du service">
-                <p>RocketChat</p></a>
-            </div>
-        </div>
 
-        <div id="divAdminKeycloak" style="display: none">
-            <a target="_blank" id="linkAdminKeycloak">
-                <img src="../images/keycloak.png" alt="Logo du service">
-                <p>Console admin Keycloak</p>
-            </a>
-        </div>
-        <!--
-        Faire en sorte de récupérer les groupes des utilisateurs pour afficher les liens vers les services correspondants
-        Lien pour la console admin keycloak pour ceux qui ont le rôle "realm-adminstrator"
-        http://localhost:8080/admin/CATS/console/#/CATS
-        -->
-    </div>
 </div>
 <script src="../../model/keycloak/scriptsParPage/script_espacePersonnelUtilisateur.js"></script>
 </body>
