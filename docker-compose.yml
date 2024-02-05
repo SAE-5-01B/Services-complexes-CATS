@@ -14,8 +14,8 @@
         LDAP_READONLY_USER: true
         LDAP_READONLY_USER_USERNAME: "sysUser"
         LDAP_READONLY_USER_PASSWORD: "readOnlyPassword"
-      ports:
-        - "389:389"
+      #ports:
+      #  - "389:389"
       volumes:
         - ./data/ldap_data:/var/lib/ldap
         - ./data/ldap_config:/etc/ldap/slapd.d
@@ -28,8 +28,8 @@
       environment:
         PHPLDAPADMIN_LDAP_HOSTS: ldap-server
         PHPLDAPADMIN_HTTPS: 0
-      ports:
-        - "6080:80"
+      #ports:
+      #  - "6080:80"
       depends_on:
         - ldap-server
 
@@ -104,8 +104,8 @@
       image: nextcloud:26.0.10
       container_name: nextcloud_app
       restart: always
-      ports:
-        - 9080:80
+      #ports:
+      #  - 9080:80
       links:
         - nextcloud_db
       volumes:
@@ -139,7 +139,7 @@
         MONGO_URL: "${MONGO_URL:-mongodb://${MONGODB_ADVERTISED_HOSTNAME:-mongodb}:${MONGODB_INITIAL_PRIMARY_PORT_NUMBER:-27017}/${MONGODB_DATABASE:-rocketchat}?replicaSet=${MONGODB_REPLICA_SET_NAME:-rs0}}"
         MONGO_OPLOG_URL: "${MONGO_OPLOG_URL:-mongodb://${MONGODB_ADVERTISED_HOSTNAME:-mongodb}:${MONGODB_INITIAL_PRIMARY_PORT_NUMBER:-27017}/local?replicaSet=${MONGODB_REPLICA_SET_NAME:-rs0}}"
         ROOT_URL: "https://${SERVER_IP}/rocketchat/"
-        PORT: ${PORT:-3000}
+        #PORT: ${PORT:-3000}
         DEPLOY_METHOD: docker
         DEPLOY_PLATFORM: ${DEPLOY_PLATFORM:-}
         REG_TOKEN: ${REG_TOKEN:-}
@@ -183,8 +183,8 @@
         - mongodb
       #expose:
       #  - ${PORT:-3000}
-      ports:
-        - "${BIND_IP:-0.0.0.0}:${HOST_PORT:-3000}:${PORT:-3000}"
+      #ports:
+      #  - "${BIND_IP:-0.0.0.0}:${HOST_PORT:-3000}:${PORT:-3000}"
 
     mongodb:
       image: docker.io/bitnami/mongodb:${MONGODB_VERSION:-4.2}
