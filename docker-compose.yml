@@ -14,8 +14,6 @@ services:
       LDAP_READONLY_USER: true
       LDAP_READONLY_USER_USERNAME: "sysUser"
       LDAP_READONLY_USER_PASSWORD: "readOnlyPassword"
-    #ports:
-    #  - "389:389"
     volumes:
       - ./data/ldap_data:/var/lib/ldap
       - ./data/ldap_config:/etc/ldap/slapd.d
@@ -34,8 +32,14 @@ services:
   # Service Keycloak
   keycloak-db:
     image: mysql:5.7
+
+    # Volume pour windows
     volumes:
       - mysql-data:/var/lib/mysql
+
+    # Volume pour linux
+    #volumes:
+    #  - ./data/my-sql-keycloak:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: keycloak
@@ -65,7 +69,6 @@ services:
       - ./conf/REALM:/opt/jboss/keycloak/import
     depends_on:
       - keycloak-db
-
     logging:
       driver: loki
       options:
@@ -75,7 +78,6 @@ services:
               expression: ’(level|lvl|severity)=(?P<level>\w+)’
           - labels:
               level:
-
 
   # Service Web-Portal
   web-portal:
@@ -88,7 +90,6 @@ services:
       - IP_SERVER=$SERVER_IP
     volumes:
       - ./web-portal:/var/www/html
-
     logging:
       driver: loki
       options:
@@ -107,10 +108,12 @@ services:
     container_name: nextcloud_db
     restart: always
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    # Volume pour linux
     #volumes:
     #  - ./data/nextcloud_db_data:/var/lib/mysql
+    # Volume pour windows
     volumes:
-      - nextcloud_db_data:/var/lib/mysql
+      - ./data/nextcloud_db_data:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=$NEXTCLOUD_MYSQL_ROOT_PASSWORD
       - MYSQL_DATABASE=$NEXTCLOUD_MYSQL_DATABASE
@@ -121,12 +124,17 @@ services:
     image: nextcloud:26.0.10
     container_name: nextcloud_app
     restart: always
-    #ports:
-    #  - 9080:80
     links:
       - nextcloud_db
+
+    # Volume pour linux
+    #volumes:
+    #  - ./data/nextcloud_data:/var/www/html
+    #  - ./data/nextcloud_config:/var/www/html/config
+    #  - ./Certificats:/usr/local/share/ca-certificates/:ro
+
+    # Volume pour windows
     volumes:
-      #- ./data/nextcloud_data:/var/www/html
       - nextcloud_data:/var/www/html
       - nextcloud_config:/var/www/html/config
       - ./Certificats:/usr/local/share/ca-certificates/:ro
@@ -165,7 +173,6 @@ services:
       MONGO_URL: "${MONGO_URL:-mongodb://${MONGODB_ADVERTISED_HOSTNAME:-mongodb}:${MONGODB_INITIAL_PRIMARY_PORT_NUMBER:-27017}/${MONGODB_DATABASE:-rocketchat}?replicaSet=${MONGODB_REPLICA_SET_NAME:-rs0}}"
       MONGO_OPLOG_URL: "${MONGO_OPLOG_URL:-mongodb://${MONGODB_ADVERTISED_HOSTNAME:-mongodb}:${MONGODB_INITIAL_PRIMARY_PORT_NUMBER:-27017}/local?replicaSet=${MONGODB_REPLICA_SET_NAME:-rs0}}"
       ROOT_URL: "https://${SERVER_IP}/rocketchat/"
-      #PORT: ${PORT:-3000}
       DEPLOY_METHOD: docker
       DEPLOY_PLATFORM: ${DEPLOY_PLATFORM:-}
       REG_TOKEN: ${REG_TOKEN:-}
@@ -220,6 +227,11 @@ services:
   mongodb:
     image: docker.io/bitnami/mongodb:${MONGODB_VERSION:-4.2}
     restart: always
+    # Volume pour linux
+    #volumes:
+    #  - ./data/mongodb_data:/bitnami/mongodb
+    # Volume pour windows
+    # Volume pour windows
     volumes:
       - mongodb_data:/bitnami/mongodb
     environment:
@@ -256,14 +268,11 @@ services:
               expression: ’(level|lvl|severity)=(?P<level>\w+)’
           - labels:
               level:
-
-
 volumes:
   mysql-data:
   nextcloud_db_data:
   nextcloud_data:
   nextcloud_config:
-  openproject_data:
   mongodb_data: { driver: local }
 
 networks:
