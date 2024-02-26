@@ -1,4 +1,19 @@
 #!/bin/bash
+#######################################
+# Bienvenue dans ce merveilleux script#
+#######################################
+# Auteur : Gaëtan Gonfiantini
+
+# Déclaration des couleurs
+Noir='\033[0;30m'
+Rouge='\033[0;31m'
+Vert='\033[0;32m'
+Jaune='\033[0;33m'
+Bleu='\033[0;34m'
+Magenta='\033[0;35m'
+Cyan='\033[0;36m'
+Blanc='\033[0;37m'
+
 
 # Récupère l'adresse IP principale de la machine
 server_ip=$(hostname -I | awk '{print $1}')
@@ -61,7 +76,32 @@ echo "Le fichier .env a été mis à jour avec l'adresse IP du serveur : $server
 sed "s/SERVER_IP/$server_ip/g" ./conf/nginxTemplate.conf > ./conf/nginx.conf
 echo "Fichier nginx.conf généré avec l'adresse IP: $server_ip"
 
-# Lancement du docker-compose
+#-------------------------------------------------------------------------#
+
+# Création du réseau externe si nécessaire
+if ! docker network ls | grep -q "external"; then
+    echo -e "${Cyan}[INFO] Création du réseau externe"
+     docker network create external
+else
+    echo -e "${Jaune}[AVERTISSEMENT] Le réseau 'external' existe déjà"
+fi
+
+# Installation du plugin pour Loki si nécessaire
+if ! docker plugin ls | grep -q "loki:latest"; then
+    echo -e "${Cyan}[INFO] Installation du plugin pour Loki"
+    docker plugin install grafana/loki-docker-driver:latest --alias loki --grant-all-permissions
+else
+    echo -e "${Jaune}[AVERTISSEMENT] Le plugin 'loki:latest' est déjà installé"
+fi
+
+#-------------------------------------------------------------------------#
+
+# Lancement docker compose de loki
+echo -e "${Vert}[INFO] Lancement de docker-compose Loki"
+echo -e "${Blanc}"
+docker-compose -f ./Loki/docker-compose.yml up -d
+
+# Lancement du docker-compose avec les services.
 docker compose up -d
 
 #-------------------------------------------------------------------------#
