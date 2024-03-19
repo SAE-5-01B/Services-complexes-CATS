@@ -231,7 +231,6 @@ services:
     #volumes:
     #  - ./data/mongodb_data:/bitnami/mongodb
     # Volume pour windows
-    # Volume pour windows
     volumes:
       - mongodb_data:/bitnami/mongodb
     environment:
