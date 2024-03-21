@@ -38,6 +38,22 @@ member: uid=ggonfiantini,ou=utilisateurs,dc=example,dc=org
 member: uid=jsanchez,ou=utilisateurs,dc=example,dc=org
 member: uid=jclavel,ou=utilisateurs,dc=example,dc=org
 member: uid=soffer,ou=utilisateurs,dc=example,dc=org
+member: uid=afrache,ou=utilisateurs,dc=example,dc=org
+member: uid=ybouazzati,ou=utilisateurs,dc=example,dc=org
+member: uid=qmelotte,ou=utilisateurs,dc=example,dc=org
+member: uid=qgauny,ou=utilisateurs,dc=example,dc=org
+member: uid=msurina,ou=utilisateurs,dc=example,dc=org
+member: uid=hazzin,ou=utilisateurs,dc=example,dc=org
+member: uid=hbouzayen,ou=utilisateurs,dc=example,dc=org
+member: uid=dmatthieu,ou=utilisateurs,dc=example,dc=org
+member: uid=fpereau,ou=utilisateurs,dc=example,dc=org
+member: uid=ldronne,ou=utilisateurs,dc=example,dc=org
+member: uid=aafonso,ou=utilisateurs,dc=example,dc=org
+member: uid=egavrieli,ou=utilisateurs,dc=example,dc=org
+member: uid=ajimenez,ou=utilisateurs,dc=example,dc=org
+member: uid=educheyne,ou=utilisateurs,dc=example,dc=org
+member: uid=fmontourcy,ou=utilisateurs,dc=example,dc=org
+member: uid=fcaron,ou=utilisateurs,dc=example,dc=org
 
 dn: cn=G4,ou=groupes,dc=example,dc=org
 objectClass: groupOfNames
@@ -271,4 +287,147 @@ givenName: Samy
 userPassword: sasa
 mail: samy@gmail.com
 
+dn: uid=afrache,ou=utilisateurs,dc=example,dc=org
+objectClass: inetOrgPerson
+uid: afrache
+cn: Axel Frache
+sn: Frache
+givenName: Axel
+userPassword: axaxg3
+mail: axel@mail.com
+
+dn: uid=ybouazzati,ou=utilisateurs,dc=example,dc=org
+objectClass: inetOrgPerson
+uid: ybouazzati
+cn: Yassine Bouazzati
+sn: Bouazzati
+givenName: Yassine
+userPassword: yayag3
+mail: yassine@mail.com
+
+dn: uid=qmelotte,ou=utilisateurs,dc=example,dc=org
+objectClass: inetOrgPerson
+uid: qmelotte
+cn: Quentin Melotte
+sn: Melotte
+givenName: Quentin
+userPassword: ququg3
+mail: quentin@mail.com
+
+dn: uid=qgauny,ou=utilisateurs,dc=example,dc=org
+objectClass: inetOrgPerson
+uid: qgauny
+cn: Quentin Gauny
+sn: Gauny
+givenName: Quentin
+userPassword: ququg3
+mail: quentin@mail.com
+
+dn: uid=msurina,ou=utilisateurs,dc=example,dc=org
+objectClass: inetOrgPerson
+uid: msurina
+cn: Margarita Surina
+sn: Surina
+givenName: Margarita
+userPassword: mamag3
+mail: margarita@mail.com
+
+dn: uid=hazzin,ou=utilisateurs,dc=example,dc=org
+objectClass: inetOrgPerson
+uid: hazzin
+cn: Hamza Azzin
+sn: Azzin
+givenName: Hamza
+userPassword: hahag3
+mail: hamza@mail.com
+
+dn: uid=hbouzayen,ou=utilisateurs,dc=example,dc=org
+objectClass: inetOrgPerson
+uid: hbouzayen
+cn: Hamza Bouzayen
+sn: Bouzayen
+givenName: Hamza
+userPassword: hahag3
+mail: hamza@mail.com
+
+dn: uid=dmatthieu,ou=utilisateurs,dc=example,dc=org
+objectClass: inetOrgPerson
+uid: dmatthieu
+cn: Damien Matthieu
+sn: Matthieu
+givenName: Damien
+userPassword: dadag3
+mail: damien@mail.com
+
+dn: uid=fpereau,ou=utilisateurs,dc=example,dc=org
+objectClass: inetOrgPerson
+uid: fpereau
+cn: Florian Pereau
+sn: Pereau
+givenName: Florian
+userPassword: flflg3
+mail: florian@mail.com
+
+dn: uid=ldronne,ou=utilisateurs,dc=example,dc=org
+objectClass: inetOrgPerson
+uid: ldronne
+cn: Laura Dronne
+sn: Dronne
+givenName: Laura
+userPassword: lalag3
+mail: laura@mail.com
+
+dn: uid=aafonso,ou=utilisateurs,dc=example,dc=org
+objectClass: inetOrgPerson
+uid: aafonso
+cn: Alex Afonso
+sn: Afonso
+givenName: Alex
+userPassword: alalg3
+mail: alex@mail.com
+
+dn: uid=egavrieli,ou=utilisateurs,dc=example,dc=org
+objectClass: inetOrgPerson
+uid: egavrieli
+cn: Evan Gavrieli
+sn: Gavrieli
+givenName: Evan
+userPassword: evevg3
+mail: evan@mail.com
+
+dn: uid=ajimenez,ou=utilisateurs,dc=example,dc=org
+objectClass: inetOrgPerson
+uid: ajimenez
+cn: Alfonso Jimenez
+sn: Jimenez
+givenName: Alfonso
+userPassword: alalg3
+mail: alfonso@mail.com
+
+dn: uid=educheyne,ou=utilisateurs,dc=example,dc=org
+objectClass: inetOrgPerson
+uid: educheyne
+cn: Elian Ducheyne
+sn: Ducheyne
+givenName: Elian
+userPassword: elelg3
+mail: elian@mail.com
+
+dn: uid=fmontourcy,ou=utilisateurs,dc=example,dc=org
+objectClass: inetOrgPerson
+uid: fmontourcy
+cn: Florian Montourcy
+sn: Montourcy
+givenName: Florian
+userPassword: flflg3
+mail: florian@mail.com
+
+dn: uid=fcaron,ou=utilisateurs,dc=example,dc=org
+objectClass: inetOrgPerson
+uid: fcaron
+cn: Florimond Caron
+sn: Caron
+givenName: Florimond
+userPassword: flflg3
+mail: florimond@mail.com
 
